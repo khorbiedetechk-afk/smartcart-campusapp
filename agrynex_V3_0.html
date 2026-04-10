@@ -1,0 +1,2159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agrynex — Smart Farming, Fresh Living</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-dark: #1A3A0A;
+      --green-mid: #2D6010;
+      --green-light: #E8F5D4;
+      --green-accent: #5A9E1A;
+      --green-200: #8DC948;
+      --green-100: #BFDF88;
+      --amber: #E8961F;
+      --amber-light: #FEF3DC;
+      --amber-dark: #3D2002;
+      --amber-mid: #5C3204;
+      --text: #141410;
+      --muted: #5A5950;
+      --surface: #F4F2EB;
+      --card: #ffffff;
+      --border: rgba(0,0,0,0.1);
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-xl: 20px;
+      --shadow-sm: 0 1px 4px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.15);
+    }
+
+    body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text); background: #F0EDE4; min-height: 100vh; scroll-behavior: smooth; }
+
+    /* PAGE TRANSITIONS */
+    .tab-content { animation: fadeSlideIn 0.3s ease; }
+    @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .page-wrap { max-width: 1000px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+
+    /* NAV */
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.25rem 0 1.5rem;
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(240,237,228,0.95); backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.1); }
+    .nav-logo { display: flex; align-items: center; gap: 10px; cursor: pointer; text-decoration: none; }
+    .nav-logo-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--green-dark), var(--green-accent));
+      display: flex; align-items: center; justify-content: center; font-size: 20px;
+      transition: transform 0.2s;
+    }
+    .nav-logo:hover .nav-logo-icon { transform: rotate(-5deg) scale(1.05); }
+    .nav-logo-text { display: flex; flex-direction: column; line-height: 1; }
+    .nav-brand { font-family: 'Fraunces', serif; font-size: 1.35rem; font-weight: 900; color: var(--green-dark); letter-spacing: -0.5px; }
+    .nav-tagline { font-size: 10px; color: var(--green-accent); font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 0.5rem; align-items: center; }
+    .nav-link { font-size: 13.5px; color: var(--muted); cursor: pointer; background: none; border: none; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500; transition: color 0.2s; padding: 6px 10px; border-radius: 8px; }
+    .nav-link:hover { color: var(--text); background: rgba(0,0,0,0.04); }
+    .cart-btn { background: var(--green-dark); color: white; border: none; border-radius: 30px; padding: 9px 20px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.2s, transform 0.15s; display: flex; align-items: center; gap: 6px; position: relative; }
+    .cart-btn:hover { background: var(--green-mid); transform: translateY(-1px); }
+    .cart-btn.bump { animation: cartBump 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97); }
+    @keyframes cartBump { 0%,100%{transform:scale(1)} 30%{transform:scale(1.15)} 60%{transform:scale(0.95)} }
+    .cart-count { display: inline-flex; align-items: center; justify-content: center; background: var(--green-accent); color: white; border-radius: 50%; width: 19px; height: 19px; font-size: 11px; font-weight: 700; transition: transform 0.2s; }
+
+    /* HERO */
+    .hero {
+      border-radius: var(--radius-xl); padding: 4rem 2.5rem 3.5rem;
+      text-align: center; position: relative; overflow: hidden;
+      margin-bottom: 2.5rem; margin-top: 1.5rem;
+      min-height: 440px; display: flex; align-items: center; justify-content: center;
+    }
+    .hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=1400&q=80'); background-size: cover; background-position: center; z-index: 0; transform: scale(1.02); transition: transform 6s ease; }
+    .hero:hover .hero-bg { transform: scale(1); }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(160deg, rgba(15,35,5,0.82) 0%, rgba(26,58,10,0.78) 50%, rgba(10,30,5,0.75) 100%); z-index: 1; }
+    .hero-content { position: relative; z-index: 2; }
+    .badge { display: inline-block; background: rgba(255,255,255,0.1); color: var(--green-100); font-size: 11.5px; font-weight: 600; padding: 5px 16px; border-radius: 20px; border: 1px solid rgba(192,221,151,0.4); margin-bottom: 1.25rem; letter-spacing: 0.8px; text-transform: uppercase; }
+    .hero h1 { font-family: 'Fraunces', serif; font-size: clamp(2rem, 5vw, 3.6rem); font-weight: 900; color: #EAF3DE; line-height: 1.15; margin-bottom: 0.85rem; }
+    .hero h1 span { color: var(--green-200); }
+    .hero p { color: var(--green-100); font-size: 1rem; max-width: 480px; margin: 0 auto 1.75rem; line-height: 1.7; opacity: 0.9; }
+    .freshness-ticker { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(192,221,151,0.3); border-radius: 20px; padding: 7px 18px; font-size: 12.5px; color: #EAF3DE; margin-bottom: 2rem; }
+    .ticker-dot { width: 7px; height: 7px; border-radius: 50%; background: #6BE87A; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
+    .countdown { color: var(--green-200); font-weight: 600; }
+    .search-bar { display: flex; align-items: center; background: white; border-radius: 50px; padding: 6px 6px 6px 22px; max-width: 540px; margin: 0 auto; gap: 8px; box-shadow: 0 4px 24px rgba(0,0,0,0.2); }
+    .search-bar input { flex: 1; border: none; outline: none; font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif; color: #2C2C2A; background: transparent; }
+    .search-bar input::placeholder { color: #999; }
+
+    /* TRUST BADGES */
+    .trust-bar { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; padding: 1.25rem; background: var(--card); border-radius: var(--radius-lg); margin-bottom: 2.5rem; border: 1px solid var(--border); }
+    .trust-item { display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 600; color: var(--muted); }
+    .trust-item span:first-child { font-size: 18px; }
+
+    /* HOW IT WORKS */
+    .hiw-section { margin-bottom: 3rem; }
+    .section-header { text-align: center; margin-bottom: 2rem; }
+    .section-header .section-label { justify-content: center; display: flex; }
+    .section-header h2 { font-family: 'Fraunces', serif; font-size: 1.75rem; font-weight: 700; color: var(--green-dark); margin-top: 0.4rem; }
+    .hiw-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .hiw-card { background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius-xl); padding: 2rem 1.5rem; text-align: center; position: relative; transition: transform 0.25s, box-shadow 0.25s; }
+    .hiw-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .hiw-step-num { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--green-dark); color: white; width: 28px; height: 28px; border-radius: 50%; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 3px solid #F0EDE4; }
+    .hiw-icon { font-size: 44px; margin-bottom: 1rem; display: block; }
+    .hiw-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+    .hiw-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* WHY CHOOSE US */
+    .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2.5rem; }
+    .why-card { background: var(--green-light); border: 1.5px solid var(--green-200); border-radius: var(--radius-lg); padding: 1.25rem; transition: transform 0.2s; }
+    .why-card:hover { transform: translateY(-2px); }
+    .why-icon { font-size: 28px; margin-bottom: 0.6rem; display: block; }
+    .why-title { font-size: 13px; font-weight: 700; color: var(--green-dark); margin-bottom: 0.25rem; }
+    .why-desc { font-size: 12px; color: var(--green-mid); line-height: 1.5; }
+
+    /* FEATURED FARMERS */
+    .farmers-section { margin-bottom: 3rem; }
+    .farmers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .farmer-card { background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius-xl); overflow: hidden; transition: transform 0.25s, box-shadow 0.25s; cursor: pointer; }
+    .farmer-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .farmer-img { height: 140px; overflow: hidden; position: relative; }
+    .farmer-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .farmer-card:hover .farmer-img img { transform: scale(1.06); }
+    .farmer-location-tag { position: absolute; bottom: 10px; left: 10px; background: rgba(26,58,10,0.85); color: white; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; letter-spacing: 0.5px; }
+    .farmer-body { padding: 1rem; }
+    .farmer-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .farmer-specialty { font-size: 11px; color: var(--green-mid); font-weight: 600; margin-bottom: 6px; }
+    .farmer-bio { font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: 8px; }
+    .farmer-stats { display: flex; gap: 12px; }
+    .farmer-stat { font-size: 11px; color: var(--muted); }
+    .farmer-stat strong { color: var(--text); display: block; font-size: 13px; }
+
+    /* TESTIMONIALS */
+    .testimonials-section { margin-bottom: 3rem; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .testimonial-card { background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius-xl); padding: 1.5rem; transition: transform 0.2s; }
+    .testimonial-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+    .testimonial-stars { display: flex; gap: 3px; margin-bottom: 0.75rem; }
+    .star-filled { color: #F59E0B; font-size: 14px; }
+    .testimonial-text { font-size: 13.5px; color: var(--text); line-height: 1.65; margin-bottom: 1rem; font-style: italic; }
+    .testimonial-quote { color: var(--green-200); font-size: 32px; line-height: 0.5; font-family: 'Fraunces', serif; font-weight: 900; margin-bottom: 0.5rem; display: block; }
+    .testimonial-author { display: flex; align-items: center; gap: 10px; }
+    .testimonial-avatar { width: 36px; height: 36px; border-radius: 50%; overflow: hidden; flex-shrink: 0; background: var(--green-light); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    .testimonial-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .testimonial-name { font-size: 13px; font-weight: 700; color: var(--text); }
+    .testimonial-location { font-size: 11px; color: var(--muted); }
+    .verified-badge { display: inline-flex; align-items: center; gap: 4px; background: var(--green-light); color: var(--green-dark); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-top: 2px; }
+
+    /* DELIVERY TIMELINE */
+    .delivery-timeline-section { background: var(--green-dark); border-radius: var(--radius-xl); padding: 2.5rem; margin-bottom: 2.5rem; color: white; position: relative; overflow: hidden; }
+    .delivery-timeline-section::before { content: ''; position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800&q=60'); background-size: cover; opacity: 0.08; }
+    .delivery-tl-content { position: relative; z-index: 1; }
+    .delivery-tl-title { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 700; color: #EAF3DE; margin-bottom: 0.5rem; text-align: center; }
+    .delivery-tl-sub { font-size: 13px; color: var(--green-100); text-align: center; margin-bottom: 2rem; opacity: 0.85; }
+    .delivery-tl-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+    .delivery-tl-steps::before { content: ''; position: absolute; top: 28px; left: 15%; right: 15%; height: 2px; background: rgba(141,201,72,0.3); z-index: 0; }
+    .delivery-tl-step { text-align: center; padding: 0 0.5rem; position: relative; z-index: 1; }
+    .tl-icon-wrap { width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 2px solid rgba(141,201,72,0.4); display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 0 auto 0.75rem; }
+    .tl-step-title { font-size: 12px; font-weight: 700; color: #EAF3DE; margin-bottom: 3px; }
+    .tl-step-time { font-size: 11px; color: var(--green-100); opacity: 0.75; }
+
+    /* PARTNER LOGOS */
+    .partners-section { margin-bottom: 2.5rem; text-align: center; }
+    .partners-logos { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; align-items: center; margin-top: 1.25rem; }
+    .partner-logo { background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius-md); padding: 0.7rem 1.2rem; font-size: 12px; font-weight: 700; color: var(--muted); transition: all 0.2s; }
+    .partner-logo:hover { border-color: var(--green-accent); color: var(--green-dark); transform: translateY(-2px); }
+
+    /* BUTTONS */
+    .btn-primary { background: var(--green-mid); color: white; border: none; border-radius: 30px; padding: 12px 26px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; white-space: nowrap; transition: background 0.2s, transform 0.15s, box-shadow 0.2s; }
+    .btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(26,58,10,0.3); }
+    .btn-full { width: 100%; border-radius: var(--radius-md); padding: 14px; margin-top: 1rem; }
+    .btn-orange { background: linear-gradient(135deg, #e07010, #f08030); color: white; border: none; border-radius: 30px; padding: 14px 24px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; width: 100%; transition: opacity 0.2s, transform 0.15s; }
+    .btn-orange:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-outline { background: white; color: var(--text); border: 1.5px solid var(--border); border-radius: 30px; padding: 12px 24px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; width: 100%; transition: background 0.2s; margin-top: 8px; }
+    .btn-outline:hover { background: var(--surface); }
+
+    .section { margin-bottom: 2.5rem; }
+    .section-label { font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 1rem; }
+
+    /* CATEGORIES */
+    .categories { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+    .cat-card { background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.1rem 0.75rem; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s, transform 0.2s, box-shadow 0.2s; }
+    .cat-card:hover { border-color: var(--green-accent); background: var(--green-light); transform: translateY(-3px); box-shadow: var(--shadow-sm); }
+    .cat-icon { font-size: 30px; margin-bottom: 7px; display: block; transition: transform 0.2s; }
+    .cat-card:hover .cat-icon { transform: scale(1.15) rotate(-5deg); }
+    .cat-name { font-size: 12px; font-weight: 600; color: var(--text); }
+
+    /* PRODUCTS */
+    .products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .product-card { background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; transition: border-color 0.2s, box-shadow 0.25s, transform 0.25s; position: relative; }
+    .product-card:hover { border-color: var(--green-accent); box-shadow: 0 8px 28px rgba(63,109,17,0.18); transform: translateY(-3px); }
+    .product-badge { position: absolute; top: 10px; left: 10px; z-index: 2; font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 20px; letter-spacing: 0.3px; text-transform: uppercase; }
+    .badge-bestseller { background: var(--amber); color: white; }
+    .badge-popular { background: var(--green-mid); color: white; }
+    .badge-lowstock { background: #EF4444; color: white; }
+    .badge-organic { background: var(--green-dark); color: var(--green-100); }
+    .wishlist-btn { position: absolute; top: 10px; right: 10px; z-index: 2; width: 30px; height: 30px; border-radius: 50%; background: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: transform 0.2s, background 0.2s; }
+    .wishlist-btn:hover { transform: scale(1.15); }
+    .wishlist-btn.active { background: #FEE2E2; }
+    .product-img { height: 150px; display: flex; align-items: center; justify-content: center; background: var(--surface); overflow: hidden; position: relative; }
+    .product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .product-card:hover .product-img img { transform: scale(1.06); }
+    .product-body { padding: 0.9rem; }
+    .product-farmer { font-size: 11px; color: var(--muted); margin-bottom: 3px; cursor: pointer; transition: color 0.2s; }
+    .product-farmer:hover { color: var(--green-mid); }
+    .product-name { font-size: 14px; font-weight: 600; margin-bottom: 6px; color: var(--text); line-height: 1.3; }
+    .product-rating { display: flex; align-items: center; gap: 4px; margin-bottom: 6px; }
+    .product-stars { color: #F59E0B; font-size: 11px; letter-spacing: 1px; }
+    .product-review-count { font-size: 11px; color: var(--muted); }
+    .product-size-selector { display: flex; gap: 4px; margin-bottom: 8px; flex-wrap: wrap; }
+    .size-pill { border: 1.5px solid var(--border); background: var(--surface); border-radius: 20px; padding: 2px 10px; font-size: 10px; font-weight: 600; cursor: pointer; color: var(--muted); transition: all 0.15s; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .size-pill.active { border-color: var(--green-accent); background: var(--green-light); color: var(--green-dark); }
+    .product-footer { display: flex; align-items: center; justify-content: space-between; }
+    .product-price { font-size: 15px; font-weight: 700; color: var(--green-mid); }
+    .product-price-orig { font-size: 12px; color: var(--muted); text-decoration: line-through; margin-left: 4px; font-weight: 400; }
+    .product-unit { font-size: 11px; color: var(--muted); font-weight: 400; }
+    .add-btn { background: var(--green-light); color: var(--green-dark); border: none; border-radius: var(--radius-md); padding: 7px 14px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.2s, transform 0.15s; }
+    .add-btn:hover { background: var(--green-100); transform: scale(1.05); }
+    .add-btn:active { transform: scale(0.97); }
+    .added-btn { background: var(--green-mid); color: white; border: none; border-radius: var(--radius-md); padding: 7px 14px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .qty-control { display: flex; align-items: center; gap: 6px; }
+    .qty-btn { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text); transition: background 0.2s, border-color 0.2s; }
+    .qty-btn:hover { background: var(--green-light); border-color: var(--green-accent); }
+    .qty-num { font-size: 14px; font-weight: 600; min-width: 20px; text-align: center; }
+
+    /* PRODUCT DETAIL MODAL */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 1rem; backdrop-filter: blur(4px); }
+    .modal-overlay.hidden { display: none; }
+    .modal { background: white; border-radius: var(--radius-xl); max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+    .modal-header { padding: 1.5rem 1.5rem 1rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: white; z-index: 1; border-radius: var(--radius-xl) var(--radius-xl) 0 0; }
+    .modal-title { font-family: 'Fraunces', serif; font-size: 1.3rem; font-weight: 700; color: var(--green-dark); }
+    .modal-close { background: var(--surface); border: none; border-radius: 50%; width: 32px; height: 32px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--muted); transition: background 0.2s; }
+    .modal-close:hover { background: var(--border); }
+    .modal-body { padding: 1.5rem; }
+    .modal-step { display: none; }
+    .modal-step.active { display: block; }
+    .modal-step-label { font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--green-accent); margin-bottom: 0.5rem; }
+    .modal-step-title { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 1rem; }
+    .modal-progress { display: flex; gap: 4px; margin-bottom: 1.5rem; }
+    .modal-progress-dot { flex: 1; height: 3px; border-radius: 2px; background: var(--border); transition: background 0.3s; }
+    .modal-progress-dot.done { background: var(--green-accent); }
+
+    /* PRODUCT DETAIL MODAL SPECIFIC */
+    .pd-modal-img { width: 100%; height: 220px; object-fit: cover; border-radius: var(--radius-lg); margin-bottom: 1rem; }
+    .pd-modal-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem; }
+    .pd-meta-item { background: var(--surface); border-radius: var(--radius-md); padding: 0.6rem 0.85rem; }
+    .pd-meta-label { font-size: 10px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .pd-meta-value { font-size: 13px; font-weight: 700; color: var(--text); margin-top: 2px; }
+    .pd-section-title { font-size: 13px; font-weight: 700; margin-bottom: 0.5rem; color: var(--text); }
+    .pd-description { font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 1rem; }
+    .pd-farmer-block { background: var(--green-light); border: 1px solid var(--green-200); border-radius: var(--radius-lg); padding: 1rem; margin-bottom: 1rem; display: flex; gap: 12px; align-items: center; }
+    .pd-farmer-avatar { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+    .pd-farmer-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .pd-farmer-name { font-size: 14px; font-weight: 700; color: var(--green-dark); }
+    .pd-farmer-loc { font-size: 12px; color: var(--green-mid); }
+    .reviews-section { margin-top: 1rem; }
+    .review-item { border-bottom: 1px solid var(--border); padding: 0.85rem 0; }
+    .review-item:last-child { border-bottom: none; }
+    .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+    .review-author { font-size: 13px; font-weight: 700; color: var(--text); }
+    .review-verified { background: var(--green-light); color: var(--green-dark); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+    .review-stars { color: #F59E0B; font-size: 12px; margin-bottom: 4px; }
+    .review-text { font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .review-date { font-size: 11px; color: var(--muted); margin-top: 4px; }
+    .bulk-discount-table { background: var(--amber-light); border: 1px solid var(--amber); border-radius: var(--radius-md); padding: 0.85rem 1rem; margin-bottom: 1rem; }
+    .bulk-title { font-size: 12px; font-weight: 700; color: var(--amber-dark); margin-bottom: 0.5rem; }
+    .bulk-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--amber-mid); padding: 2px 0; }
+    .bulk-row .discount-label { font-weight: 700; color: var(--amber-dark); }
+
+    /* FILTERS / SORT */
+    .shop-controls { display: flex; gap: 8px; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; }
+    .filter-pill { border: 1.5px solid var(--border); background: var(--card); border-radius: 20px; padding: 7px 16px; font-size: 12px; font-weight: 600; cursor: pointer; color: var(--muted); transition: all 0.2s; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .filter-pill:hover, .filter-pill.active { border-color: var(--green-accent); background: var(--green-light); color: var(--green-dark); }
+    .sort-select { border: 1.5px solid var(--border); background: var(--card); border-radius: 20px; padding: 7px 16px; font-size: 12px; font-weight: 600; cursor: pointer; color: var(--muted); outline: none; font-family: 'Plus Jakarta Sans', sans-serif; margin-left: auto; }
+    .sort-select:focus { border-color: var(--green-accent); }
+
+    /* SUBSCRIPTION */
+    .subscription-box { background: var(--green-dark); border-radius: var(--radius-xl); padding: 2.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: center; position: relative; overflow: hidden; }
+    .subscription-box::before { content: ''; position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800&q=60'); background-size: cover; background-position: center; opacity: 0.12; }
+    .sub-content { position: relative; z-index: 1; }
+    .subscription-box h2 { font-family: 'Fraunces', serif; font-size: 1.8rem; color: #EAF3DE; margin-bottom: 0.6rem; line-height: 1.25; font-weight: 700; }
+    .subscription-box p { color: var(--green-100); font-size: 14px; line-height: 1.7; margin-bottom: 1.4rem; opacity: 0.9; }
+    .sub-box-item { background: rgba(255,255,255,0.08); border: 1px solid rgba(192,221,151,0.2); border-radius: var(--radius-md); padding: 0.85rem 1rem; margin-bottom: 8px; position: relative; z-index: 1; cursor: pointer; transition: background 0.2s; }
+    .sub-box-item:hover { background: rgba(255,255,255,0.15); }
+    .sub-box-name { font-size: 13px; font-weight: 600; color: #EAF3DE; margin-bottom: 2px; }
+    .sub-box-desc { font-size: 12px; color: #9FE1CB; }
+    .sub-box-price { font-size: 13px; color: var(--green-200); margin-top: 4px; font-weight: 600; }
+
+    /* TABS */
+    .tabs { display: flex; gap: 4px; background: var(--surface); border-radius: var(--radius-md); padding: 4px; margin-bottom: 1.5rem; }
+    .tab { flex: 1; text-align: center; padding: 9px; font-size: 13px; font-weight: 600; border-radius: 8px; cursor: pointer; color: var(--muted); background: none; border: none; font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.2s; }
+    .tab.active { background: var(--card); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+
+    /* SUBSCRIBE PAGE */
+    .subscribe-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.75rem; }
+    .sub-label { font-size: 14px; font-weight: 600; margin-bottom: 0.75rem; color: var(--text); }
+    .box-options { display: flex; flex-direction: column; gap: 8px; }
+    .box-option { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius-md); padding: 0.85rem 1rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s; }
+    .box-option:hover { border-color: var(--green-accent); }
+    .box-option.active { background: var(--green-light); border-color: var(--green-accent); }
+    .box-option-name { font-size: 14px; font-weight: 600; color: var(--text); }
+    .box-option-desc { font-size: 12px; color: var(--muted); }
+    .box-option-price { font-size: 14px; font-weight: 700; color: var(--green-mid); white-space: nowrap; margin-left: 8px; }
+    .freq-pills { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
+    .freq-pill { background: var(--surface); color: var(--muted); border: 1.5px solid var(--border); border-radius: 20px; padding: 7px 18px; font-size: 13px; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500; transition: all 0.2s; }
+    .freq-pill.active, .freq-pill:hover { background: var(--green-light); border-color: var(--green-accent); color: var(--green-dark); }
+    .payment-section { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.1rem; margin-top: 1rem; }
+    .payment-methods { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 0.75rem; }
+    .pay-pill { background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius-md); padding: 8px 14px; font-size: 13px; font-weight: 600; color: var(--text); cursor: pointer; display: flex; align-items: center; gap: 6px; font-family: 'Plus Jakarta Sans', sans-serif; transition: border-color 0.2s; }
+    .pay-pill:hover { border-color: var(--green-accent); }
+    .pay-pill.active { border-color: var(--green-accent); background: var(--green-light); }
+    .sub-summary { background: var(--green-light); border: 1.5px solid var(--green-200); border-radius: var(--radius-md); padding: 1rem; margin-top: 1rem; }
+    .sub-summary-label { font-size: 12px; color: var(--green-mid); margin-bottom: 4px; font-weight: 600; }
+    .sub-summary-name { font-size: 15px; font-weight: 700; color: var(--green-dark); }
+    .sub-summary-price { font-size: 13px; color: var(--green-mid); }
+    .sub-summary-tip { font-size: 11px; color: var(--green-mid); margin-top: 4px; }
+
+    /* TRACKER */
+    .tracker-section { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-bottom: 1.5rem; }
+    .tracker-step { text-align: center; padding: 1.1rem 0.5rem; background: var(--surface); border: 1px solid var(--border); }
+    .tracker-step:first-child { border-radius: var(--radius-md) 0 0 var(--radius-md); }
+    .tracker-step:last-child { border-radius: 0 var(--radius-md) var(--radius-md) 0; }
+    .tracker-step.done { background: var(--green-light); border-color: var(--green-200); }
+    .tracker-step.active { background: #d9edbc; border-color: var(--green-mid); }
+    .tracker-icon { font-size: 22px; margin-bottom: 5px; }
+    .tracker-label { font-size: 12px; font-weight: 600; color: var(--text); }
+    .tracker-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .tracker-step.done .tracker-label { color: var(--green-mid); }
+
+    /* CART */
+    .cart-layout { display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; align-items: start; }
+    .cart-item { background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius-lg); padding: 1rem; display: flex; align-items: center; gap: 1rem; margin-bottom: 10px; transition: border-color 0.2s; }
+    .cart-item:hover { border-color: var(--green-200); }
+    .cart-item-emoji { font-size: 40px; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; background: var(--surface); border-radius: var(--radius-md); flex-shrink: 0; overflow: hidden; }
+    .cart-item-emoji img { width: 100%; height: 100%; object-fit: cover; }
+    .cart-item-info { flex: 1; }
+    .cart-item-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+    .cart-item-farmer { font-size: 12px; color: var(--muted); }
+    .cart-item-price { font-size: 14px; font-weight: 700; color: var(--green-mid); margin-top: 4px; }
+    .remove-btn { background: none; border: none; color: #ccc; font-size: 18px; cursor: pointer; padding: 4px; transition: color 0.2s; }
+    .remove-btn:hover { color: #e24b4a; }
+    .order-summary-card { background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; position: sticky; top: 80px; }
+    .summary-title { font-size: 15px; font-weight: 700; margin-bottom: 1rem; }
+    .summary-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+    .summary-row.total { font-size: 15px; font-weight: 700; color: var(--text); border-top: 1px solid var(--border); padding-top: 10px; margin-top: 4px; }
+    .summary-row span:last-child { color: var(--text); }
+    .summary-row.total span:last-child { color: var(--green-mid); font-size: 16px; }
+    .security-note { font-size: 11px; color: var(--muted); text-align: center; margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 4px; }
+    .empty-cart { text-align: center; padding: 3rem 1rem; }
+    .empty-cart-icon { font-size: 60px; margin-bottom: 1rem; }
+    .empty-cart-text { font-size: 16px; font-weight: 700; margin-bottom: 0.5rem; }
+    .empty-cart-sub { font-size: 14px; color: var(--muted); margin-bottom: 1.5rem; }
+
+    /* CHECKOUT */
+    .checkout-layout { display: grid; grid-template-columns: 1fr 320px; gap: 1.5rem; align-items: start; }
+    .checkout-section { background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1rem; }
+    .checkout-section-title { font-size: 14px; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+    .form-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
+    .form-group label { font-size: 12px; color: var(--muted); font-weight: 600; }
+    .form-group input, .form-group select { border: 1.5px solid var(--border); border-radius: var(--radius-md); padding: 10px 12px; font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text); background: var(--surface); outline: none; transition: border-color 0.2s; }
+    .form-group input:focus, .form-group select:focus { border-color: var(--green-accent); background: white; }
+    .delivery-slots { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .slot-option { border: 1.5px solid var(--border); border-radius: var(--radius-md); padding: 10px 12px; cursor: pointer; transition: all 0.2s; }
+    .slot-option:hover { border-color: var(--green-accent); }
+    .slot-option.active { border-color: var(--green-accent); background: var(--green-light); }
+    .slot-time { font-size: 13px; font-weight: 600; color: var(--text); }
+    .slot-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .pay-option { border: 1.5px solid var(--border); border-radius: var(--radius-md); padding: 12px; cursor: pointer; display: flex; align-items: center; gap: 12px; margin-bottom: 8px; transition: all 0.2s; }
+    .pay-option:hover { border-color: var(--green-accent); }
+    .pay-option.active { border-color: var(--green-accent); background: var(--green-light); }
+    .pay-radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: border-color 0.2s; }
+    .pay-option.active .pay-radio { border-color: var(--green-mid); }
+    .pay-radio-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--green-mid); display: none; }
+    .pay-option.active .pay-radio-dot { display: block; }
+    .pay-icon { font-size: 22px; }
+    .pay-name { font-size: 14px; font-weight: 600; }
+    .pay-desc { font-size: 12px; color: var(--muted); }
+    .pay-badges { display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap; }
+    .pay-badge { font-size: 10px; background: #f0f0f0; color: #555; border-radius: 4px; padding: 2px 6px; font-weight: 600; }
+    .discount-badge { background: var(--green-light); color: var(--green-dark); font-size: 11px; border-radius: 4px; padding: 2px 7px; font-weight: 600; margin-left: auto; }
+
+    /* MOMO */
+    .momo-screen { background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius-xl); padding: 2rem; max-width: 440px; margin: 0 auto; text-align: center; }
+    .momo-icon { font-size: 52px; margin-bottom: 0.5rem; }
+    .momo-amount { font-size: 1.8rem; font-weight: 800; color: var(--text); margin-bottom: 0.25rem; font-family: 'Fraunces', serif; }
+    .momo-subtitle { font-size: 13px; color: var(--muted); margin-bottom: 1.5rem; }
+    .momo-warning { background: var(--amber-light); border: 1px solid var(--amber); border-radius: var(--radius-md); padding: 0.85rem 1rem; font-size: 13px; color: var(--amber-dark); font-weight: 600; margin-bottom: 1.5rem; }
+    .momo-instruction { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; text-align: left; margin-bottom: 1.5rem; }
+    .momo-instruction-title { font-size: 13px; font-weight: 600; margin-bottom: 0.75rem; }
+    .momo-step { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; font-size: 13px; }
+    .momo-step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--green-dark); color: white; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .momo-step-text { color: var(--text); line-height: 1.5; }
+    .momo-progress { display: flex; gap: 6px; margin-bottom: 1.5rem; }
+    .momo-progress-bar { flex: 1; height: 4px; border-radius: 2px; background: var(--border); }
+    .momo-progress-bar.active { background: var(--green-mid); }
+    .momo-confirm-text { font-size: 13px; color: var(--muted); margin-bottom: 1.5rem; }
+
+    /* SUCCESS */
+    .success-screen { text-align: center; padding: 2rem 1rem; }
+    .success-icon { font-size: 64px; margin-bottom: 1rem; }
+    .success-title { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 900; color: var(--green-dark); margin-bottom: 0.5rem; }
+    .success-sub { font-size: 14px; color: var(--muted); max-width: 340px; margin: 0 auto 2rem; line-height: 1.7; }
+    .success-order-card { background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; max-width: 400px; margin: 0 auto 1.5rem; text-align: left; }
+    .success-order-row { display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+    .success-order-row:last-child { border-bottom: none; }
+    .success-order-label { color: var(--muted); }
+    .success-order-value { font-weight: 600; }
+    .whatsapp-btn { background: #25D366; color: white; border: none; border-radius: 30px; padding: 12px 28px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s; }
+    .whatsapp-btn:hover { background: #1da851; }
+
+    /* WISHLIST */
+    .wishlist-empty { text-align: center; padding: 3rem 1rem; }
+
+    /* ORDER HISTORY */
+    .order-history-item { background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 0.75rem; transition: border-color 0.2s; }
+    .order-history-item:hover { border-color: var(--green-200); }
+    .order-history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .order-id-text { font-size: 14px; font-weight: 700; color: var(--text); }
+    .order-status-badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+    .status-delivered { background: var(--green-light); color: var(--green-dark); }
+    .status-transit { background: var(--amber-light); color: var(--amber-dark); }
+    .order-history-meta { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+    .order-history-items-preview { font-size: 12px; color: var(--text); font-weight: 500; }
+    .order-history-total { font-size: 14px; font-weight: 700; color: var(--green-mid); margin-top: 4px; }
+
+    /* LOADING SPINNER */
+    .loading-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.85); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; display: none; }
+    .loading-overlay.active { display: flex; }
+    .spinner { width: 48px; height: 48px; border: 4px solid var(--green-light); border-top-color: var(--green-mid); border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { font-size: 14px; font-weight: 600; color: var(--green-mid); }
+
+    /* SKELETON LOADING */
+    .skeleton { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 6px; }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    .skeleton-card { background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .skeleton-img { height: 150px; background: #E8E8E3; position: relative; overflow: hidden; }
+    .skeleton-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.5) 50%, transparent 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+    .skeleton-body { padding: 0.9rem; }
+    .skeleton-line { height: 12px; border-radius: 4px; margin-bottom: 8px; background: #E8E8E3; position: relative; overflow: hidden; }
+    .skeleton-line::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.6) 50%, transparent 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+    .skeleton-line.w60 { width: 60%; }
+    .skeleton-line.w80 { width: 80%; }
+    .skeleton-line.w40 { width: 40%; }
+
+    /* FLOATING CART */
+    .floating-cart { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: var(--green-dark); color: white; padding: 12px 28px; border-radius: 30px; font-size: 14px; font-weight: 600; font-family: 'Plus Jakarta Sans', sans-serif; box-shadow: 0 4px 20px rgba(26,58,10,0.4); cursor: pointer; border: none; display: none; align-items: center; gap: 8px; z-index: 500; animation: floatUp 0.3s ease; transition: transform 0.2s, box-shadow 0.2s; }
+    .floating-cart:hover { transform: translateX(-50%) translateY(-2px); box-shadow: 0 6px 28px rgba(26,58,10,0.5); }
+    @keyframes floatUp { from { opacity: 0; transform: translateX(-50%) translateY(16px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+    .floating-cart.visible { display: flex; }
+
+    /* WHATSAPP NOTICE */
+    .whatsapp-notice { background: var(--amber-light); border: 1px solid var(--amber); border-radius: var(--radius-md); padding: 1rem; display: flex; align-items: center; gap: 12px; margin-top: 1rem; }
+    .order-detail { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; }
+    .order-id { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .order-meta { font-size: 13px; color: var(--muted); margin-bottom: 1rem; }
+    .rating-label { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+    .stars { display: flex; gap: 6px; }
+    .star { font-size: 26px; cursor: pointer; transition: transform 0.1s; }
+    .star:hover { transform: scale(1.2); }
+    .rating-thanks { font-size: 13px; color: var(--green-mid); margin-top: 8px; display: none; font-weight: 500; }
+
+    /* PROFILE */
+    .profile-section { max-width: 600px; margin: 0 auto; }
+    .profile-hero { background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 100%); border-radius: var(--radius-xl); padding: 2rem; color: white; margin-bottom: 1.5rem; position: relative; overflow: hidden; }
+    .profile-hero::before { content: '🌿'; font-size: 80px; position: absolute; right: 20px; top: 10px; opacity: 0.15; }
+    .profile-hero-name { font-family: 'Fraunces', serif; font-size: 1.6rem; font-weight: 900; margin-bottom: 4px; }
+    .profile-hero-tag { font-size: 12px; opacity: 0.75; margin-bottom: 1rem; }
+    .profile-hero-stats { display: flex; gap: 1.5rem; }
+    .profile-stat label { font-size: 10px; opacity: 0.7; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
+    .profile-stat span { font-size: 1.2rem; font-weight: 800; }
+    .profile-card-section { background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1rem; }
+    .profile-card-section h3 { font-size: 14px; font-weight: 700; margin-bottom: 1rem; color: var(--text); }
+    .profile-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .profile-info-item label { font-size: 11px; color: var(--muted); font-weight: 600; display: block; margin-bottom: 2px; }
+    .profile-info-item span { font-size: 14px; font-weight: 600; color: var(--text); }
+    .sub-status-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--green-light); color: var(--green-dark); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 700; margin-bottom: 1rem; }
+    .sub-status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green-accent); animation: pulse 1.5s infinite; }
+    .delivery-timeline { position: relative; }
+    .delivery-item { display: flex; gap: 12px; margin-bottom: 1rem; }
+    .delivery-dot-wrap { display: flex; flex-direction: column; align-items: center; }
+    .delivery-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--green-accent); border: 2px solid white; box-shadow: 0 0 0 2px var(--green-accent); flex-shrink: 0; margin-top: 3px; }
+    .delivery-dot.past { background: var(--muted); box-shadow: 0 0 0 2px var(--muted); }
+    .delivery-line { width: 2px; background: var(--border); flex: 1; margin-top: 4px; }
+    .delivery-info { flex: 1; }
+    .delivery-date { font-size: 13px; font-weight: 700; }
+    .delivery-desc { font-size: 12px; color: var(--muted); }
+    .logout-btn { background: none; border: 1.5px solid var(--border); border-radius: var(--radius-md); padding: 10px 20px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--muted); transition: all 0.2s; width: 100%; margin-top: 0.5rem; }
+    .logout-btn:hover { border-color: #e24b4a; color: #e24b4a; }
+    .sub-profile-list { border: 1.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .sub-profile-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+    .sub-profile-row:last-child { border-bottom: none; }
+    .sub-profile-label { font-size: 12px; color: var(--muted); font-weight: 500; }
+    .sub-profile-value { font-size: 13px; font-weight: 700; color: var(--text); }
+    .sub-profile-badge { background: var(--green-light); color: var(--green-dark); font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+    .profile-card { background: linear-gradient(135deg, var(--green-dark), var(--green-mid)); border-radius: var(--radius-lg); padding: 1.5rem; color: white; margin-bottom: 1rem; }
+    .profile-card-name { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 4px; }
+    .profile-card-sub { font-size: 12px; opacity: 0.8; margin-bottom: 1rem; }
+    .profile-card-details { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .profile-card-item label { font-size: 10px; opacity: 0.7; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
+    .profile-card-item span { font-size: 13px; font-weight: 600; }
+
+    /* CHATBOT */
+    .chatbot-toggle { position: fixed; bottom: 24px; right: 24px; z-index: 999; width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--green-mid), var(--green-accent)); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(45,96,16,0.4); transition: transform 0.2s; }
+    .chatbot-toggle:hover { transform: scale(1.08); }
+    .chatbot-toggle svg { width: 26px; height: 26px; }
+    .chatbot-window { position: fixed; bottom: 92px; right: 24px; width: 340px; height: 480px; background: white; border-radius: var(--radius-xl); box-shadow: 0 8px 40px rgba(0,0,0,0.18); display: flex; flex-direction: column; z-index: 998; overflow: hidden; transform: scale(0.8); opacity: 0; pointer-events: none; transform-origin: bottom right; transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    .chatbot-window.open { transform: scale(1); opacity: 1; pointer-events: all; }
+    .chatbot-header { background: linear-gradient(135deg, var(--green-dark), var(--green-mid)); padding: 1rem 1.2rem; display: flex; align-items: center; gap: 10px; }
+    .chatbot-avatar { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    .chatbot-info { flex: 1; }
+    .chatbot-name { font-size: 14px; font-weight: 700; color: white; }
+    .chatbot-status { font-size: 11px; color: rgba(255,255,255,0.75); display: flex; align-items: center; gap: 4px; }
+    .chatbot-status-dot { width: 6px; height: 6px; border-radius: 50%; background: #6BE87A; }
+    .chatbot-close { background: none; border: none; color: rgba(255,255,255,0.8); font-size: 20px; cursor: pointer; padding: 4px; }
+    .chatbot-messages { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 10px; }
+    .chat-msg { max-width: 82%; }
+    .chat-msg.bot { align-self: flex-start; }
+    .chat-msg.user { align-self: flex-end; }
+    .chat-bubble { padding: 10px 14px; border-radius: 16px; font-size: 13.5px; line-height: 1.5; }
+    .chat-msg.bot .chat-bubble { background: var(--surface); color: var(--text); border-radius: 4px 16px 16px 16px; }
+    .chat-msg.user .chat-bubble { background: var(--green-mid); color: white; border-radius: 16px 4px 16px 16px; }
+    .chat-time { font-size: 10px; color: var(--muted); margin-top: 3px; }
+    .chat-msg.user .chat-time { text-align: right; }
+    .chat-quick-replies { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 1rem 0.5rem; }
+    .chat-quick { background: var(--green-light); border: 1.5px solid var(--green-200); color: var(--green-dark); border-radius: 20px; padding: 6px 12px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.2s; }
+    .chat-quick:hover { background: var(--green-100); }
+    .chatbot-input { padding: 0.85rem 1rem; border-top: 1px solid var(--border); display: flex; gap: 8px; }
+    .chatbot-input input { flex: 1; border: 1.5px solid var(--border); border-radius: 20px; padding: 8px 14px; font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif; outline: none; transition: border-color 0.2s; background: var(--surface); }
+    .chatbot-input input:focus { border-color: var(--green-accent); background: white; }
+    .chatbot-send { background: var(--green-mid); color: white; border: none; border-radius: 50%; width: 36px; height: 36px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; flex-shrink: 0; }
+    .chatbot-send:hover { background: var(--green-dark); }
+    .typing-indicator { display: flex; gap: 4px; align-items: center; padding: 10px 14px; }
+    .typing-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); animation: typing 1.2s infinite; }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typing { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-5px)} }
+
+    /* TOAST */
+    .cart-toast { position: fixed; bottom: 90px; right: 24px; background: var(--green-dark); color: white; padding: 12px 20px; border-radius: var(--radius-md); font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif; display: none; z-index: 9999; box-shadow: 0 4px 16px rgba(0,0,0,0.2); font-weight: 500; animation: slideInRight 0.3s ease; }
+    @keyframes slideInRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+
+    /* FAQ ACCORDION */
+    .faq-item { border: 1.5px solid var(--border); border-radius: var(--radius-lg); margin-bottom: 8px; overflow: hidden; }
+    .faq-question { padding: 1rem 1.25rem; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: var(--card); transition: background 0.2s; }
+    .faq-question:hover { background: var(--surface); }
+    .faq-toggle { font-size: 18px; color: var(--muted); transition: transform 0.3s; }
+    .faq-answer { font-size: 13px; color: var(--muted); line-height: 1.65; padding: 0 1.25rem; max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.2s; }
+    .faq-item.open .faq-answer { max-height: 300px; padding: 0 1.25rem 1rem; }
+    .faq-item.open .faq-toggle { transform: rotate(45deg); }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 3rem 0 0; margin-top: 3rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 2rem; margin-bottom: 2rem; }
+    .footer-logo { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 900; color: var(--green-dark); margin-bottom: 0.4rem; }
+    .footer-tagline { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 220px; margin-bottom: 1rem; }
+    .footer-social { display: flex; gap: 8px; margin-top: 0.5rem; }
+    .social-link { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+    .social-link:hover { border-color: var(--green-accent); background: var(--green-light); transform: translateY(-2px); }
+    .footer-heading { font-size: 13px; font-weight: 700; margin-bottom: 0.75rem; color: var(--text); }
+    .footer-link { font-size: 13px; color: var(--muted); display: block; margin-bottom: 5px; cursor: pointer; transition: color 0.2s; }
+    .footer-link:hover { color: var(--text); }
+    .footer-phone { font-size: 14px; font-weight: 700; color: var(--green-dark); margin-bottom: 4px; }
+    .newsletter-form { display: flex; gap: 6px; margin-top: 0.75rem; }
+    .newsletter-input { flex: 1; border: 1.5px solid var(--border); border-radius: var(--radius-md); padding: 9px 12px; font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif; outline: none; background: var(--surface); transition: border-color 0.2s; }
+    .newsletter-input:focus { border-color: var(--green-accent); background: white; }
+    .newsletter-btn { background: var(--green-dark); color: white; border: none; border-radius: var(--radius-md); padding: 9px 16px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; white-space: nowrap; transition: background 0.2s; }
+    .newsletter-btn:hover { background: var(--green-mid); }
+    .footer-bottom { border-top: 1px solid var(--border); padding: 1.25rem 0; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--muted); }
+    .footer-legal { display: flex; gap: 1rem; }
+    .footer-legal span { cursor: pointer; transition: color 0.2s; }
+    .footer-legal span:hover { color: var(--text); }
+
+    /* POLICY SECTION */
+    .policy-section { background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius-xl); padding: 2rem; max-width: 640px; margin: 0 auto; }
+    .policy-section h2 { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 700; color: var(--green-dark); margin-bottom: 1rem; }
+    .policy-section h3 { font-size: 14px; font-weight: 700; margin: 1.25rem 0 0.4rem; }
+    .policy-section p { font-size: 13.5px; color: var(--muted); line-height: 1.7; margin-bottom: 0.5rem; }
+
+    /* RESPONSIVE */
+    @media (max-width: 720px) {
+      .cart-layout, .checkout-layout { grid-template-columns: 1fr; }
+      .order-summary-card { position: static; }
+      .categories { grid-template-columns: repeat(3, 1fr); }
+      .products { grid-template-columns: repeat(2, 1fr); }
+      .subscription-box { grid-template-columns: 1fr; }
+      .subscribe-grid { grid-template-columns: 1fr; }
+      .tracker-section { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links .nav-link { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+      .chatbot-window { width: calc(100vw - 32px); right: 16px; }
+      .profile-info-grid { grid-template-columns: 1fr; }
+      .hiw-grid, .farmers-grid, .testimonials-grid, .why-grid { grid-template-columns: 1fr; }
+      .delivery-tl-steps { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .delivery-tl-steps::before { display: none; }
+    }
+    @media (max-width: 420px) {
+      .categories { grid-template-columns: repeat(2, 1fr); }
+      .products { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOADING OVERLAY -->
+<div class="loading-overlay" id="loading-overlay">
+  <div class="spinner"></div>
+  <div class="loading-text">Processing your order...</div>
+</div>
+
+<!-- FLOATING CART -->
+<button class="floating-cart" id="floating-cart" onclick="switchTab('cart')">
+  🛒 <span id="floating-cart-label">View cart</span>
+</button>
+
+<div class="page-wrap">
+
+  <nav id="main-nav">
+    <a class="nav-logo" onclick="switchTab('home')" href="#">
+      <div class="nav-logo-icon">🌾</div>
+      <div class="nav-logo-text">
+        <span class="nav-brand">Agrynex</span>
+        <span class="nav-tagline">Smart Farming, Fresh Living</span>
+      </div>
+    </a>
+    <div class="nav-links">
+      <button class="nav-link" onclick="switchTab('home')">Home</button>
+      <button class="nav-link" onclick="switchTab('shop')">Shop</button>
+      <button class="nav-link" onclick="switchTab('subscribe')">Subscribe</button>
+      <button class="nav-link" onclick="switchTab('track')">Track Order</button>
+      <button class="nav-link" onclick="switchTab('wishlist')">❤ Wishlist</button>
+      <button class="nav-link" onclick="showProfileOrLogin()">My Profile</button>
+      <button class="cart-btn" id="cart-btn" onclick="switchTab('cart')">
+        🛒 Cart <span class="cart-count" id="cart-count">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HOME -->
+  <div id="tab-home" class="tab-content">
+    <div class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="badge">🌱 Farm-fresh delivery in Accra</div>
+        <h1>Smart Farming.<br><span>Fresh Living.</span></h1>
+        <p>Premium produce sourced directly from Ghanaian farms. No middlemen. Fair prices. Delivered to your door — today.</p>
+        <div class="freshness-ticker">
+          <div class="ticker-dot"></div>
+          Next delivery closes in <span class="countdown" id="countdown">3h 42m</span> — harvested today
+        </div>
+        <div class="search-bar">
+          <input type="text" placeholder="Search yam, tomatoes, pineapple..." id="search-input" oninput="filterHomeProducts()" />
+          <button class="btn-primary" onclick="switchTab('shop')">Find Fresh Produce</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRUST BAR -->
+    <div class="trust-bar">
+      <div class="trust-item"><span>✅</span> Verified Ghanaian Farms</div>
+      <div class="trust-item"><span>🚚</span> Free Same-Day Delivery</div>
+      <div class="trust-item"><span>💯</span> 100% Freshness Guarantee</div>
+      <div class="trust-item"><span>📱</span> Easy MoMo Payments</div>
+      <div class="trust-item"><span>🌿</span> Farm-to-Table Promise</div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="hiw-section">
+      <div class="section-header">
+        <div class="section-label">Simple process</div>
+        <h2>How Agrynex Works</h2>
+      </div>
+      <div class="hiw-grid">
+        <div class="hiw-card">
+          <div class="hiw-step-num">1</div>
+          <span class="hiw-icon">🛒</span>
+          <div class="hiw-title">Browse & Select</div>
+          <div class="hiw-desc">Choose from over 50+ fresh products sourced directly from verified Ghanaian farms. Filter by category, price, or farm.</div>
+        </div>
+        <div class="hiw-card">
+          <div class="hiw-step-num">2</div>
+          <span class="hiw-icon">📱</span>
+          <div class="hiw-title">Pay via MoMo</div>
+          <div class="hiw-desc">Secure checkout with MTN MoMo, Telecel Cash, card, or pay on delivery. Get 2% discount on mobile money payments.</div>
+        </div>
+        <div class="hiw-card">
+          <div class="hiw-step-num">3</div>
+          <span class="hiw-icon">🚚</span>
+          <div class="hiw-title">Fresh to Your Door</div>
+          <div class="hiw-desc">We harvest and pack your order same morning. Choose morning (8–12pm) or evening (4–8pm) delivery slots. Always free.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHY CHOOSE US -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-label">Our advantages</div>
+        <h2>Why Choose Agrynex?</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-card">
+          <span class="why-icon">🌾</span>
+          <div class="why-title">Direct from Farms</div>
+          <div class="why-desc">We work directly with 120+ verified farmers across Ghana — no middlemen, better prices for you.</div>
+        </div>
+        <div class="why-card">
+          <span class="why-icon">⏱</span>
+          <div class="why-title">Same-Day Delivery</div>
+          <div class="why-desc">Order before noon, get it by evening. We operate 7 days a week in Accra, Tema, Kumasi & Takoradi.</div>
+        </div>
+        <div class="why-card">
+          <span class="why-icon">💚</span>
+          <div class="why-title">Freshness Guaranteed</div>
+          <div class="why-desc">Not satisfied? We'll replace or refund your order — no questions asked. Your freshness is our promise.</div>
+        </div>
+        <div class="why-card">
+          <span class="why-icon">⚖</span>
+          <div class="why-title">Fair Farmer Prices</div>
+          <div class="why-desc">Farmers earn 30% more through Agrynex. We believe sustainable farming starts with fair compensation.</div>
+        </div>
+        <div class="why-card">
+          <span class="why-icon">🔒</span>
+          <div class="why-title">Secure Payments</div>
+          <div class="why-desc">Payments secured by Korapay. All major mobile money platforms, debit/credit cards, and cash on delivery accepted.</div>
+        </div>
+        <div class="why-card">
+          <span class="why-icon">📦</span>
+          <div class="why-title">Custom Subscriptions</div>
+          <div class="why-desc">Set up a weekly, bi-weekly, or monthly farm box and never run out of fresh produce again.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Shop by category</div>
+      <div class="categories">
+        <div class="cat-card" onclick="filterCat('vegetables')"><span class="cat-icon">🥦</span><div class="cat-name">Vegetables</div></div>
+        <div class="cat-card" onclick="filterCat('fruits')"><span class="cat-icon">🍍</span><div class="cat-name">Fruits</div></div>
+        <div class="cat-card" onclick="filterCat('staples')"><span class="cat-icon">🌽</span><div class="cat-name">Staples</div></div>
+        <div class="cat-card" onclick="filterCat('farm')"><span class="cat-icon">🥚</span><div class="cat-name">Farm Products</div></div>
+        <div class="cat-card" onclick="switchTab('subscribe')"><span class="cat-icon">📦</span><div class="cat-name">Soup Starter</div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Fresh today</div>
+      <div class="products" id="home-grid">
+        <!-- Skeleton loading -->
+        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line w60"></div><div class="skeleton-line w80"></div><div class="skeleton-line w40"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line w60"></div><div class="skeleton-line w80"></div><div class="skeleton-line w40"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line w60"></div><div class="skeleton-line w80"></div><div class="skeleton-line w40"></div></div></div>
+      </div>
+    </div>
+
+    <!-- FEATURED FARMERS -->
+    <div class="farmers-section">
+      <div class="section-header">
+        <div class="section-label">The people behind your food</div>
+        <h2>Meet Our Farmers</h2>
+      </div>
+      <div class="farmers-grid">
+        <div class="farmer-card" onclick="showFarmerModal('ama')">
+          <div class="farmer-img">
+            <img src="https://images.unsplash.com/photo-1609348445341-4f68ff268de1?w=400&q=70" alt="Ama Serwaa" />
+            <div class="farmer-location-tag">📍 Aburi, E. Region</div>
+          </div>
+          <div class="farmer-body">
+            <div class="farmer-name">Ama Serwaa</div>
+            <div class="farmer-specialty">🥬 Leafy Vegetables Specialist</div>
+            <div class="farmer-bio">Growing kontomire, garden eggs, and indigenous greens for over 15 years using natural farming methods.</div>
+            <div class="farmer-stats">
+              <div class="farmer-stat"><strong>15 yrs</strong>Experience</div>
+              <div class="farmer-stat"><strong>4.9 ★</strong>Rating</div>
+              <div class="farmer-stat"><strong>2.3 acres</strong>Farm size</div>
+            </div>
+          </div>
+        </div>
+        <div class="farmer-card" onclick="showFarmerModal('kofi')">
+          <div class="farmer-img">
+            <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&q=70" alt="Kofi Mensah" />
+            <div class="farmer-location-tag">📍 Kumasi, Ashanti</div>
+          </div>
+          <div class="farmer-body">
+            <div class="farmer-name">Kofi Mensah</div>
+            <div class="farmer-specialty">🍅 Tomato & Pepper Expert</div>
+            <div class="farmer-bio">Running a family tomato farm that has supplied Kumasi markets for three generations. Now going direct to consumers.</div>
+            <div class="farmer-stats">
+              <div class="farmer-stat"><strong>22 yrs</strong>Experience</div>
+              <div class="farmer-stat"><strong>4.8 ★</strong>Rating</div>
+              <div class="farmer-stat"><strong>5 acres</strong>Farm size</div>
+            </div>
+          </div>
+        </div>
+        <div class="farmer-card" onclick="showFarmerModal('abena')">
+          <div class="farmer-img">
+            <img src="https://images.unsplash.com/photo-1529154036614-a60975f5c760?w=400&q=70" alt="Abena Owusu" />
+            <div class="farmer-location-tag">📍 Techiman, Bono E.</div>
+          </div>
+          <div class="farmer-body">
+            <div class="farmer-name">Abena Owusu</div>
+            <div class="farmer-specialty">🥚 Free-Range Poultry Farmer</div>
+            <div class="farmer-bio">Award-winning free-range egg producer. All birds are pasture-raised and feed on natural grains — no hormones ever.</div>
+            <div class="farmer-stats">
+              <div class="farmer-stat"><strong>8 yrs</strong>Experience</div>
+              <div class="farmer-stat"><strong>5.0 ★</strong>Rating</div>
+              <div class="farmer-stat"><strong>500 birds</strong>Flock size</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DELIVERY TIMELINE -->
+    <div class="delivery-timeline-section">
+      <div class="delivery-tl-content">
+        <div class="delivery-tl-title">From Farm to Your Table</div>
+        <div class="delivery-tl-sub">We harvest fresh each morning so you get produce at peak nutrition and flavour.</div>
+        <div class="delivery-tl-steps">
+          <div class="delivery-tl-step">
+            <div class="tl-icon-wrap">🌾</div>
+            <div class="tl-step-title">Harvested</div>
+            <div class="tl-step-time">5:00 – 7:00 AM</div>
+          </div>
+          <div class="delivery-tl-step">
+            <div class="tl-icon-wrap">🔍</div>
+            <div class="tl-step-title">Quality Checked</div>
+            <div class="tl-step-time">7:00 – 9:00 AM</div>
+          </div>
+          <div class="delivery-tl-step">
+            <div class="tl-icon-wrap">📦</div>
+            <div class="tl-step-title">Packed & Sorted</div>
+            <div class="tl-step-time">9:00 – 11:00 AM</div>
+          </div>
+          <div class="delivery-tl-step">
+            <div class="tl-icon-wrap">🚚</div>
+            <div class="tl-step-title">Delivered to You</div>
+            <div class="tl-step-time">By 12 PM or 8 PM</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TESTIMONIALS -->
+    <div class="testimonials-section">
+      <div class="section-header">
+        <div class="section-label">Customer love</div>
+        <h2>What Our Customers Say</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-stars">
+            <span class="star-filled">★★★★★</span>
+          </div>
+          <span class="testimonial-quote">"</span>
+          <div class="testimonial-text">The tomatoes from Kofi's farm are the best I've had since my childhood in Kumasi. So fresh and full of flavour!</div>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">👩🏾</div>
+            <div>
+              <div class="testimonial-name">Akosua Asante</div>
+              <div class="testimonial-location">East Legon, Accra</div>
+              <span class="verified-badge">✓ Verified Buyer</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">
+            <span class="star-filled">★★★★★</span>
+          </div>
+          <span class="testimonial-quote">"</span>
+          <div class="testimonial-text">I subscribed to the Family Box 3 months ago. Never miss my weekly delivery. My kids are eating so much better now.</div>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">👨🏾</div>
+            <div>
+              <div class="testimonial-name">Samuel Tetteh</div>
+              <div class="testimonial-location">Tema, Greater Accra</div>
+              <span class="verified-badge">✓ Verified Buyer</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">
+            <span class="star-filled">★★★★</span>
+          </div>
+          <span class="testimonial-quote">"</span>
+          <div class="testimonial-text">Quick delivery, beautiful produce, easy MoMo payment. The free-range eggs are genuinely different — rich orange yolks!</div>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">👩🏾</div>
+            <div>
+              <div class="testimonial-name">Efua Baidoo</div>
+              <div class="testimonial-location">Dansoman, Accra</div>
+              <span class="verified-badge">✓ Verified Buyer</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARTNER LOGOS -->
+    <div class="partners-section">
+      <div class="section-label" style="text-align:center;display:block;">Trusted by our partners</div>
+      <div class="partners-logos">
+        <div class="partner-logo">📱 MTN MoMo</div>
+        <div class="partner-logo">📱 Telecel Cash</div>
+        <div class="partner-logo">🔒 Korapay</div>
+        <div class="partner-logo">🏛 Absa Bank</div>
+        <div class="partner-logo">🌿 MOFA Ghana</div>
+        <div class="partner-logo">🚚 AMS Logistics</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="subscription-box">
+        <div class="sub-content">
+          <div class="badge">Subscribe &amp; Save</div>
+          <h2>Set it. Eat fresh.<br>Every week.</h2>
+          <p>Choose a farm box, pick your frequency, and get fresh produce delivered on schedule — no market trips needed.</p>
+          <button class="btn-primary" onclick="switchTab('subscribe')">Build My Box →</button>
+        </div>
+        <div class="sub-content">
+          <div class="sub-box-item" onclick="switchTab('subscribe')"><div class="sub-box-name">Standard Family Box</div><div class="sub-box-desc">Weekly essentials for 4</div><div class="sub-box-price">GHS 120 / week</div></div>
+          <div class="sub-box-item" onclick="switchTab('subscribe')"><div class="sub-box-name">Healthy Office Box</div><div class="sub-box-desc">Pre-cut fruits for the team</div><div class="sub-box-price">GHS 200 / week</div></div>
+          <div class="sub-box-item" onclick="switchTab('subscribe')"><div class="sub-box-name">Soup Starter Pack</div><div class="sub-box-desc">Tomatoes, onions, habaneros</div><div class="sub-box-price">GHS 60 / week</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-label">Got questions?</div>
+        <h2>Frequently Asked Questions</h2>
+      </div>
+      <div id="faq-list">
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">What areas do you deliver to? <span class="faq-toggle">+</span></div>
+          <div class="faq-answer">We currently deliver to all areas in Accra, Tema, Kumasi, and Takoradi. We're expanding to more cities soon! Delivery is always free.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">How fresh is the produce? <span class="faq-toggle">+</span></div>
+          <div class="faq-answer">Our produce is harvested on the same day you order. Farmers pick in the early morning (5–7 AM), it's quality-checked and packed, then dispatched for delivery the same day. You can't get fresher than that!</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">What payment methods do you accept? <span class="faq-toggle">+</span></div>
+          <div class="faq-answer">We accept MTN MoMo, Telecel Cash, AirtelTigo Money, debit/credit cards (Visa & Mastercard), and Pay on Delivery. Mobile money payments come with a 2% discount!</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">What if I'm not happy with my order? <span class="faq-toggle">+</span></div>
+          <div class="faq-answer">We have a 100% freshness guarantee. If any item is damaged, spoiled, or not to your expectation, contact us within 24 hours and we'll replace it or issue a full refund. No questions asked.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">How do subscriptions work? <span class="faq-toggle">+</span></div>
+          <div class="faq-answer">Choose a farm box (Standard, Office, Soup Starter, or Organic Premium), pick your delivery frequency (weekly, bi-weekly, or monthly), and your box will arrive on schedule. You can pause or cancel anytime with 48 hours notice.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SHOP -->
+  <div id="tab-shop" style="display:none;" class="tab-content">
+    <div class="section-label">All products</div>
+    <div class="shop-controls">
+      <div class="tabs" style="flex:1;margin-bottom:0;">
+        <button class="tab active" onclick="filterCatTab(this,'all')">All</button>
+        <button class="tab" onclick="filterCatTab(this,'vegetables')">Vegetables</button>
+        <button class="tab" onclick="filterCatTab(this,'fruits')">Fruits</button>
+        <button class="tab" onclick="filterCatTab(this,'staples')">Staples</button>
+        <button class="tab" onclick="filterCatTab(this,'farm')">Farm</button>
+      </div>
+      <select class="sort-select" onchange="sortProducts(this.value)">
+        <option value="default">Sort: Featured</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="rating">Highest Rated</option>
+        <option value="name">Name A–Z</option>
+      </select>
+    </div>
+    <div class="products" id="shop-grid"></div>
+  </div>
+
+  <!-- CART -->
+  <div id="tab-cart" style="display:none;" class="tab-content">
+    <div class="section-label">Your cart</div>
+    <div id="cart-empty" class="empty-cart" style="display:none;">
+      <div class="empty-cart-icon">🛒</div>
+      <div class="empty-cart-text">Your cart is empty</div>
+      <div class="empty-cart-sub">Add some fresh produce to get started</div>
+      <button class="btn-primary" onclick="switchTab('shop')">Browse Products</button>
+    </div>
+    <div id="cart-full">
+      <div class="cart-layout">
+        <div>
+          <div id="cart-items-list"></div>
+        </div>
+        <div class="order-summary-card">
+          <div class="summary-title">Order summary</div>
+          <div class="summary-row"><span>Subtotal</span><span id="summary-subtotal">GHS 0</span></div>
+          <div class="summary-row"><span>Delivery fee</span><span style="color:var(--green-mid);">Free</span></div>
+          <div class="summary-row total"><span>Order total</span><span id="summary-total">GHS 0</span></div>
+          <button class="btn-primary btn-full" onclick="switchTab('checkout')">Proceed to Checkout →</button>
+          <div class="security-note">🔒 All data is safeguarded</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKOUT -->
+  <div id="tab-checkout" style="display:none;" class="tab-content">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;">
+      <button onclick="switchTab('cart')" style="background:none;border:none;cursor:pointer;font-size:18px;color:var(--muted);">←</button>
+      <div class="section-label" style="margin:0;">Order confirmation</div>
+      <span style="font-size:11px;color:var(--green-mid);margin-left:auto;">🔒 All data is safeguarded</span>
+    </div>
+    <div class="checkout-layout">
+      <div>
+        <div class="checkout-section">
+          <div class="checkout-section-title"><span>📍</span> Delivery address</div>
+          <div class="form-row">
+            <div class="form-group"><label>Full name</label><input type="text" placeholder="e.g. Ama Mensah" id="co-name" /></div>
+            <div class="form-group"><label>Phone number</label><input type="tel" placeholder="+233 XX XXX XXXX" id="co-phone" /></div>
+          </div>
+          <div class="form-group"><label>Street address / landmark</label><input type="text" placeholder="e.g. 12 Devtraco Estates, Tema" id="co-address" /></div>
+          <div class="form-row">
+            <div class="form-group"><label>Area / neighbourhood</label><input type="text" placeholder="e.g. East Legon" id="co-area" /></div>
+            <div class="form-group"><label>City</label><select id="co-city"><option>Accra</option><option>Tema</option><option>Kumasi</option><option>Takoradi</option></select></div>
+          </div>
+        </div>
+        <div class="checkout-section">
+          <div class="checkout-section-title"><span>🕐</span> Delivery window</div>
+          <div class="delivery-slots">
+            <div class="slot-option active" onclick="selectSlot(this)"><div class="slot-time">Morning</div><div class="slot-desc">8:00 AM – 12:00 PM</div></div>
+            <div class="slot-option" onclick="selectSlot(this)"><div class="slot-time">Evening</div><div class="slot-desc">4:00 PM – 8:00 PM</div></div>
+          </div>
+        </div>
+        <div class="checkout-section">
+          <div class="checkout-section-title"><span>💳</span> Payment method</div>
+          <div id="pay-options">
+            <div class="pay-option active" onclick="selectPayMethod(this,'mtn')"><div class="pay-radio"><div class="pay-radio-dot"></div></div><div class="pay-icon">📱</div><div><div class="pay-name">MTN Mobile Money</div><div class="pay-badges"><span class="pay-badge">MTN MoMo</span></div></div><div class="discount-badge">Save 2%</div></div>
+            <div class="pay-option" onclick="selectPayMethod(this,'telecel')"><div class="pay-radio"><div class="pay-radio-dot"></div></div><div class="pay-icon">📱</div><div><div class="pay-name">Telecel Cash</div><div class="pay-badges"><span class="pay-badge">Telecel</span></div></div><div class="discount-badge">Save 2%</div></div>
+            <div class="pay-option" onclick="selectPayMethod(this,'airteltigo')"><div class="pay-radio"><div class="pay-radio-dot"></div></div><div class="pay-icon">📱</div><div><div class="pay-name">AirtelTigo Money</div><div class="pay-badges"><span class="pay-badge">AirtelTigo</span></div></div><div class="discount-badge">Save 2%</div></div>
+            <div class="pay-option" onclick="selectPayMethod(this,'card')"><div class="pay-radio"><div class="pay-radio-dot"></div></div><div class="pay-icon">💳</div><div><div class="pay-name">Debit / Credit Card</div><div class="pay-badges"><span class="pay-badge">Visa</span><span class="pay-badge">Mastercard</span></div></div></div>
+            <div class="pay-option" onclick="selectPayMethod(this,'pod')"><div class="pay-radio"><div class="pay-radio-dot"></div></div><div class="pay-icon">💰</div><div><div class="pay-name">Pay on Delivery</div><div class="pay-desc">Cash when your order arrives</div></div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="order-summary-card">
+          <div class="summary-title">Order summary</div>
+          <div id="checkout-items-preview"></div>
+          <div class="summary-row" style="margin-top:8px;"><span>Subtotal</span><span id="co-subtotal">GHS 0</span></div>
+          <div class="summary-row"><span>Delivery</span><span style="color:var(--green-mid);">Free</span></div>
+          <div class="summary-row" id="discount-row" style="display:none;"><span>MoMo discount (2%)</span><span id="co-discount" style="color:var(--green-mid);">-GHS 0</span></div>
+          <div class="summary-row total"><span>Total</span><span id="co-total">GHS 0</span></div>
+          <button class="btn-orange" onclick="submitOrder()" style="margin-top:1rem;border-radius:var(--radius-md);">Submit order</button>
+          <div class="security-note">🔒 Payment secured by Korapay</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOMO PAYMENT -->
+  <div id="tab-momo" style="display:none;" class="tab-content">
+    <div class="momo-screen">
+      <div class="momo-icon">📱</div>
+      <div class="momo-amount" id="momo-amount">Pay GHS 0</div>
+      <div class="momo-subtitle">Agrynex · Secured by Korapay</div>
+      <div class="momo-warning">Do not close this page until you get a payment confirmation</div>
+      <div class="momo-instruction">
+        <div class="momo-instruction-title">Enter your Mobile Money PIN on your phone to authorise this payment.</div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:1rem;">A request has been sent to your phone — please enter your PIN to authorise.</p>
+        <div style="font-size:12px;font-weight:600;margin-bottom:8px;">No prompt received? (MTN only)</div>
+        <div class="momo-step"><div class="momo-step-num">1</div><div class="momo-step-text">Dial *170# on your phone</div></div>
+        <div class="momo-step"><div class="momo-step-num">2</div><div class="momo-step-text">Select 6 for Wallet</div></div>
+        <div class="momo-step"><div class="momo-step-num">3</div><div class="momo-step-text">Choose 3 for My Approvals</div></div>
+        <div class="momo-step"><div class="momo-step-num">4</div><div class="momo-step-text">Enter your PIN to approve</div></div>
+      </div>
+      <div class="momo-progress">
+        <div class="momo-progress-bar active"></div>
+        <div class="momo-progress-bar active" id="momo-bar2"></div>
+        <div class="momo-progress-bar" id="momo-bar3"></div>
+      </div>
+      <div class="momo-confirm-text">You will get a confirmation once we receive your payment.</div>
+      <button class="btn-primary btn-full" onclick="confirmMomoPayment()" style="border-radius:var(--radius-md);padding:13px;">I've sent the money</button>
+      <button class="btn-outline" onclick="switchTab('checkout')">Cancel — go back</button>
+    </div>
+  </div>
+
+  <!-- ORDER SUCCESS -->
+  <div id="tab-success" style="display:none;" class="tab-content">
+    <div class="success-screen">
+      <div class="success-icon">✅</div>
+      <div class="success-title">Order Confirmed!</div>
+      <div class="success-sub">Your fresh produce is being packed and will be on its way soon. You'll receive a WhatsApp confirmation shortly.</div>
+      <div class="success-order-card">
+        <div class="success-order-row"><span class="success-order-label">Order ID</span><span class="success-order-value" id="success-order-id">#AG-0000</span></div>
+        <div class="success-order-row"><span class="success-order-label">Amount paid</span><span class="success-order-value" id="success-amount">GHS 0</span></div>
+        <div class="success-order-row"><span class="success-order-label">Payment</span><span class="success-order-value" id="success-method">MTN MoMo</span></div>
+        <div class="success-order-row"><span class="success-order-label">Delivery</span><span class="success-order-value" id="success-delivery">Morning, Today</span></div>
+        <div class="success-order-row"><span class="success-order-label">Address</span><span class="success-order-value" id="success-address">Accra</span></div>
+      </div>
+      <button class="whatsapp-btn" onclick="alert('Opening WhatsApp with your receipt...')">💬 View on WhatsApp</button>
+      <br><br>
+      <button class="btn-primary" onclick="switchTab('track')">Track my order →</button>
+      <br><br>
+      <button class="nav-link" onclick="switchTab('home')">← Continue shopping</button>
+    </div>
+  </div>
+
+  <!-- SUBSCRIBE -->
+  <div id="tab-subscribe" style="display:none;" class="tab-content">
+    <div class="section-label">Build your farm box</div>
+    <div class="subscribe-grid">
+      <div>
+        <div class="sub-label">Choose your box</div>
+        <div class="box-options" id="box-options">
+          <div class="box-option active" onclick="selectBox(this,'Standard Family Box','GHS 120')"><div><div class="box-option-name">Standard Family Box</div><div class="box-option-desc">Weekly essentials for 4</div></div><div class="box-option-price">GHS 120</div></div>
+          <div class="box-option" onclick="selectBox(this,'Healthy Office Box','GHS 200')"><div><div class="box-option-name">Healthy Office Box</div><div class="box-option-desc">Pre-cut fruits for the team</div></div><div class="box-option-price">GHS 200</div></div>
+          <div class="box-option" onclick="selectBox(this,'Soup Starter Pack','GHS 60')"><div><div class="box-option-name">Soup Starter Pack</div><div class="box-option-desc">Tomatoes, onions, habaneros</div></div><div class="box-option-price">GHS 60</div></div>
+          <div class="box-option" onclick="selectBox(this,'Organic Premium Box','GHS 250')"><div><div class="box-option-name">Organic Premium Box</div><div class="box-option-desc">Certified organic variety</div></div><div class="box-option-price">GHS 250</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="sub-label">Delivery frequency</div>
+        <div class="freq-pills" id="freq-pills">
+          <button class="freq-pill active" onclick="selectFreq(this,'Weekly')">Weekly</button>
+          <button class="freq-pill" onclick="selectFreq(this,'Bi-weekly')">Bi-weekly</button>
+          <button class="freq-pill" onclick="selectFreq(this,'Monthly')">Monthly</button>
+        </div>
+        <div class="sub-label" style="margin-top:0.5rem;">Delivery window</div>
+        <div class="freq-pills" id="window-pills">
+          <button class="freq-pill active" onclick="selectWindow(this)">Morning 8am–12pm</button>
+          <button class="freq-pill" onclick="selectWindow(this)">Evening 4pm–8pm</button>
+        </div>
+        <div class="payment-section">
+          <div style="font-size:13px;font-weight:700;color:var(--text);">Payment method</div>
+          <div class="payment-methods" id="pay-methods">
+            <div class="pay-pill active" onclick="selectPay(this)">📱 MTN MoMo</div>
+            <div class="pay-pill" onclick="selectPay(this)">📱 Telecel Cash</div>
+            <div class="pay-pill" onclick="selectPay(this)">💳 Card</div>
+            <div class="pay-pill" onclick="selectPay(this)">💰 Pay on Delivery</div>
+          </div>
+        </div>
+        <div class="sub-summary">
+          <div class="sub-summary-label">Your subscription summary</div>
+          <div class="sub-summary-name" id="sub-name">Standard Family Box — Weekly</div>
+          <div class="sub-summary-price" id="sub-price">GHS 120 / delivery</div>
+          <div class="sub-summary-tip">Digital payment saves you 2%</div>
+        </div>
+        <button class="btn-primary btn-full" onclick="openSubscribeModal()">Subscribe Now →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRACK -->
+  <div id="tab-track" style="display:none;" class="tab-content">
+    <div class="section-label">Order tracking</div>
+    <div class="tracker-section">
+      <div class="tracker-step done"><div class="tracker-icon">🌾</div><div class="tracker-label">Harvested</div><div class="tracker-sub">6:00 AM today</div></div>
+      <div class="tracker-step done"><div class="tracker-icon">🏢</div><div class="tracker-label">Sorted at hub</div><div class="tracker-sub">Accra Hub, 10:30 AM</div></div>
+      <div class="tracker-step active"><div class="tracker-icon">🚚</div><div class="tracker-label">Out for delivery</div><div class="tracker-sub">En route to you</div></div>
+      <div class="tracker-step"><div class="tracker-icon">🏠</div><div class="tracker-label">Delivered</div><div class="tracker-sub">Est. 4:30 PM</div></div>
+    </div>
+    <div class="order-detail">
+      <div class="order-id">Order #AG-2847</div>
+      <div class="order-meta">3 items · Estimated delivery 4:00–8:00 PM · Paid via MTN MoMo</div>
+      <div class="rating-label">Rate the freshness of your produce:</div>
+      <div class="stars"><span class="star" onclick="rate(1)">⭐</span><span class="star" onclick="rate(2)">⭐</span><span class="star" onclick="rate(3)">⭐</span><span class="star" onclick="rate(4)">⭐</span><span class="star" onclick="rate(5)">⭐</span></div>
+      <div class="rating-thanks" id="rating-thanks">Thanks! Your feedback helps our farmers improve.</div>
+    </div>
+    <div class="whatsapp-notice">
+      <div style="font-size:22px;">💬</div>
+      <div><div style="font-size:13px;font-weight:700;color:var(--amber-dark);">WhatsApp receipt sent</div><div style="font-size:12px;color:var(--amber-mid);">Your digital receipt was delivered to your WhatsApp number</div></div>
+    </div>
+
+    <!-- ORDER HISTORY -->
+    <div style="margin-top:2rem;">
+      <div class="section-label">Order history</div>
+      <div class="order-history-item">
+        <div class="order-history-header">
+          <div class="order-id-text">#AG-2847</div>
+          <div class="order-status-badge status-transit">🚚 Out for Delivery</div>
+        </div>
+        <div class="order-history-meta">Today, April 10 · Evening slot · MTN MoMo</div>
+        <div class="order-history-items-preview">Roma Tomatoes, Free-range Eggs, Plantain</div>
+        <div class="order-history-total">GHS 47</div>
+      </div>
+      <div class="order-history-item">
+        <div class="order-history-header">
+          <div class="order-id-text">#AG-2831</div>
+          <div class="order-status-badge status-delivered">✅ Delivered</div>
+        </div>
+        <div class="order-history-meta">April 3, 2026 · Morning slot · Telecel Cash</div>
+        <div class="order-history-items-preview">Kontomire, Garden Eggs, Red Onions, Raw Honey</div>
+        <div class="order-history-total">GHS 62</div>
+      </div>
+      <div class="order-history-item">
+        <div class="order-history-header">
+          <div class="order-id-text">#AG-2810</div>
+          <div class="order-status-badge status-delivered">✅ Delivered</div>
+        </div>
+        <div class="order-history-meta">March 28, 2026 · Morning slot · Pay on Delivery</div>
+        <div class="order-history-items-preview">Pineapple, Mango, Watermelon, Pawpaw</div>
+        <div class="order-history-total">GHS 77</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WISHLIST -->
+  <div id="tab-wishlist" style="display:none;" class="tab-content">
+    <div class="section-label">My Wishlist</div>
+    <div id="wishlist-empty" class="wishlist-empty" style="display:none;">
+      <div style="font-size:60px;margin-bottom:1rem;">❤️</div>
+      <div style="font-size:16px;font-weight:700;margin-bottom:0.5rem;">Your wishlist is empty</div>
+      <div style="font-size:14px;color:var(--muted);margin-bottom:1.5rem;">Tap the ❤ on any product to save it here.</div>
+      <button class="btn-primary" onclick="switchTab('shop')">Browse Products</button>
+    </div>
+    <div id="wishlist-grid" class="products"></div>
+  </div>
+
+  <!-- SUBSCRIBER PROFILE -->
+  <div id="tab-profile" style="display:none;" class="tab-content">
+    <div id="login-section" class="profile-section">
+      <div class="section-label">Subscriber Portal</div>
+      <div style="background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius-xl);padding:2rem;max-width:420px;margin:0 auto;">
+        <div style="text-align:center;margin-bottom:1.5rem;">
+          <div style="font-size:48px;margin-bottom:0.75rem;">🌾</div>
+          <div style="font-family:'Fraunces',serif;font-size:1.4rem;font-weight:900;color:var(--green-dark);margin-bottom:0.4rem;">Welcome Back</div>
+          <div style="font-size:13px;color:var(--muted);">Log in to view your subscription details</div>
+        </div>
+        <div class="form-group"><label>Email address</label><input type="email" id="login-email" placeholder="you@email.com" /></div>
+        <div class="form-group"><label>Password</label><input type="password" id="login-password" placeholder="••••••••" /></div>
+        <button class="btn-primary btn-full" onclick="loginSubscriber()" style="margin-top:0.5rem;">Log In to My Profile</button>
+        <div style="text-align:center;margin-top:1rem;font-size:13px;color:var(--muted);">
+          Don't have an account? <span style="color:var(--green-mid);font-weight:600;cursor:pointer;" onclick="switchTab('subscribe')">Subscribe now →</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="profile-section" class="profile-section" style="display:none;">
+      <div class="section-label">My Subscription Profile</div>
+      <div class="profile-hero">
+        <div class="profile-hero-name" id="profile-name">Loading...</div>
+        <div class="profile-hero-tag">Agrynex Subscriber · Member since April 2026</div>
+        <div class="profile-hero-stats">
+          <div class="profile-stat"><label>Deliveries</label><span id="profile-deliveries">0</span></div>
+          <div class="profile-stat"><label>Saved</label><span id="profile-saved">GHS 0</span></div>
+          <div class="profile-stat"><label>Status</label><span>Active ✓</span></div>
+        </div>
+      </div>
+      <div class="profile-card-section">
+        <h3>Current Subscription</h3>
+        <div class="sub-status-badge"><div class="sub-status-dot"></div>Active Subscription</div>
+        <div class="sub-profile-list">
+          <div class="sub-profile-row"><span class="sub-profile-label">Box type</span><span class="sub-profile-value" id="profile-box">—</span></div>
+          <div class="sub-profile-row"><span class="sub-profile-label">Frequency</span><span class="sub-profile-value" id="profile-freq">—</span></div>
+          <div class="sub-profile-row"><span class="sub-profile-label">Delivery window</span><span class="sub-profile-value" id="profile-window">—</span></div>
+          <div class="sub-profile-row"><span class="sub-profile-label">Price per delivery</span><span class="sub-profile-value" id="profile-price">—</span></div>
+          <div class="sub-profile-row"><span class="sub-profile-label">Payment method</span><span class="sub-profile-value" id="profile-payment">—</span></div>
+          <div class="sub-profile-row"><span class="sub-profile-label">Next delivery</span><span class="sub-profile-value" id="profile-next-delivery">—</span></div>
+          <div class="sub-profile-row"><span class="sub-profile-label">Status</span><span class="sub-profile-badge">Active</span></div>
+        </div>
+      </div>
+      <div class="profile-card-section">
+        <h3>Personal Details</h3>
+        <div class="profile-info-grid">
+          <div class="profile-info-item"><label>Full Name</label><span id="pd-name">—</span></div>
+          <div class="profile-info-item"><label>Phone</label><span id="pd-phone">—</span></div>
+          <div class="profile-info-item"><label>Email</label><span id="pd-email">—</span></div>
+          <div class="profile-info-item"><label>City</label><span id="pd-city">—</span></div>
+          <div class="profile-info-item" style="grid-column:1/-1;"><label>Delivery Address</label><span id="pd-address">—</span></div>
+        </div>
+      </div>
+      <div class="profile-card-section">
+        <h3>Delivery History</h3>
+        <div class="delivery-timeline" id="profile-delivery-history"></div>
+      </div>
+      <button class="logout-btn" onclick="logoutSubscriber()">Log Out</button>
+    </div>
+  </div>
+
+  <!-- POLICY PAGE -->
+  <div id="tab-policy" style="display:none;" class="tab-content">
+    <div class="policy-section">
+      <div id="policy-content"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">🌾 Agrynex</div>
+        <div class="footer-tagline">Smart Farming, Fresh Living. Farm-fresh produce delivered straight to your door — faster, cheaper, and fairer.</div>
+        <div class="footer-social">
+          <a class="social-link" href="#" title="Facebook">📘</a>
+          <a class="social-link" href="#" title="Instagram">📸</a>
+          <a class="social-link" href="#" title="Twitter/X">🐦</a>
+          <a class="social-link" href="https://wa.me/233533686580" title="WhatsApp">💬</a>
+          <a class="social-link" href="#" title="TikTok">🎵</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-heading">Quick links</div>
+        <span class="footer-link" onclick="switchTab('shop')">Shop produce</span>
+        <span class="footer-link" onclick="switchTab('subscribe')">Subscriptions</span>
+        <span class="footer-link" onclick="switchTab('track')">Track order</span>
+        <span class="footer-link" onclick="showProfileOrLogin()">My Profile</span>
+        <span class="footer-link" onclick="switchTab('wishlist')">❤ Wishlist</span>
+      </div>
+      <div>
+        <div class="footer-heading">Company</div>
+        <span class="footer-link" onclick="showPolicy('about')">About Us</span>
+        <span class="footer-link" onclick="showPolicy('delivery')">Delivery Policy</span>
+        <span class="footer-link" onclick="showPolicy('refund')">Refund Policy</span>
+        <span class="footer-link" onclick="showPolicy('terms')">Terms & Conditions</span>
+        <span class="footer-link" onclick="showPolicy('privacy')">Privacy Policy</span>
+      </div>
+      <div>
+        <div class="footer-heading">Contact us</div>
+        <div class="footer-phone">📞 0533686580</div>
+        <span class="footer-link">💬 <a href="https://wa.me/233533686580" style="color:inherit;text-decoration:none;">WhatsApp support</a></span>
+        <span class="footer-link">📧 hello@agrynex.com</span>
+        <span class="footer-link">📍 Accra, Ghana 🇬🇭</span>
+        <div style="margin-top:1rem;">
+          <div class="footer-heading">Newsletter</div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:0.5rem;">Get weekly deals & farm updates</div>
+          <div class="newsletter-form">
+            <input class="newsletter-input" type="email" placeholder="your@email.com" id="newsletter-email" />
+            <button class="newsletter-btn" onclick="subscribeNewsletter()">Join</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Agrynex Ghana Ltd. All rights reserved.</span>
+      <div class="footer-legal">
+        <span onclick="showPolicy('privacy')">Privacy</span>
+        <span onclick="showPolicy('terms')">Terms</span>
+        <span onclick="showPolicy('refund')">Refunds</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<!-- PRODUCT DETAIL MODAL -->
+<div class="modal-overlay hidden" id="product-modal-overlay" onclick="closePdModal(event)">
+  <div class="modal" onclick="event.stopPropagation()" style="max-width:560px;">
+    <div class="modal-header">
+      <div class="modal-title" id="pd-modal-title">Product Details</div>
+      <button class="modal-close" onclick="document.getElementById('product-modal-overlay').classList.add('hidden')">✕</button>
+    </div>
+    <div class="modal-body" id="pd-modal-body"></div>
+  </div>
+</div>
+
+<!-- FARMER MODAL -->
+<div class="modal-overlay hidden" id="farmer-modal-overlay" onclick="closeFarmerModal(event)">
+  <div class="modal" onclick="event.stopPropagation()" style="max-width:480px;">
+    <div class="modal-header">
+      <div class="modal-title" id="farmer-modal-title">Farmer Profile</div>
+      <button class="modal-close" onclick="document.getElementById('farmer-modal-overlay').classList.add('hidden')">✕</button>
+    </div>
+    <div class="modal-body" id="farmer-modal-body"></div>
+  </div>
+</div>
+
+<!-- SUBSCRIPTION MODAL -->
+<div class="modal-overlay hidden" id="sub-modal-overlay" onclick="closeSubModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title">Complete Your Subscription</div>
+      <button class="modal-close" onclick="closeModalFull()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-progress" id="modal-progress">
+        <div class="modal-progress-dot done" id="mpd1"></div>
+        <div class="modal-progress-dot" id="mpd2"></div>
+        <div class="modal-progress-dot" id="mpd3"></div>
+      </div>
+      <div class="modal-step active" id="modal-step-1">
+        <div class="modal-step-label">Step 1 of 3</div>
+        <div class="modal-step-title">Your delivery details</div>
+        <div class="form-group"><label>Full name</label><input type="text" id="sub-fname" placeholder="e.g. Ama Mensah" /></div>
+        <div class="form-group"><label>Phone number</label><input type="tel" id="sub-phone" placeholder="+233 XX XXX XXXX" /></div>
+        <div class="form-group"><label>Email address</label><input type="email" id="sub-email" placeholder="you@email.com" /></div>
+        <div class="form-group"><label>Delivery address</label><input type="text" id="sub-address" placeholder="Street, area, landmark" /></div>
+        <div class="form-group"><label>City</label><select id="sub-city"><option>Accra</option><option>Tema</option><option>Kumasi</option><option>Takoradi</option></select></div>
+        <button class="btn-primary btn-full" onclick="modalNext(2)">Continue →</button>
+      </div>
+      <div class="modal-step" id="modal-step-2">
+        <div class="modal-step-label">Step 2 of 3</div>
+        <div class="modal-step-title">Review & confirm subscription</div>
+        <div class="profile-card" id="modal-sub-card">
+          <div class="profile-card-name" id="mc-name">—</div>
+          <div class="profile-card-sub">Agrynex Subscriber</div>
+          <div class="profile-card-details">
+            <div class="profile-card-item"><label>Box</label><span id="mc-box">—</span></div>
+            <div class="profile-card-item"><label>Frequency</label><span id="mc-freq">—</span></div>
+            <div class="profile-card-item"><label>Window</label><span id="mc-window">—</span></div>
+            <div class="profile-card-item"><label>Price</label><span id="mc-price">—</span></div>
+          </div>
+        </div>
+        <div class="sub-summary" style="margin-top:0;">
+          <div class="sub-summary-label">Total per delivery</div>
+          <div class="sub-summary-name" id="mc-total">—</div>
+          <div class="sub-summary-tip">Free delivery always included</div>
+        </div>
+        <button class="btn-primary btn-full" onclick="modalNext(3)">Confirm Subscription →</button>
+        <button class="btn-outline" onclick="modalNext(1)">← Go back</button>
+      </div>
+      <div class="modal-step" id="modal-step-3">
+        <div class="modal-step-label">Step 3 of 3</div>
+        <div class="modal-step-title">🎉 Subscription confirmed!</div>
+        <div class="success-screen" style="padding:1rem 0;">
+          <div class="success-icon" style="font-size:48px;">🌾</div>
+          <div class="success-sub">Your farm box subscription is active. You'll receive a WhatsApp confirmation and delivery reminder.</div>
+          <button class="whatsapp-btn" onclick="alert('Opening WhatsApp...')">💬 View on WhatsApp</button>
+          <br><br>
+          <button class="btn-primary" onclick="closeModalFull();showProfileOrLogin()">View My Profile</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHATBOT -->
+<button class="chatbot-toggle" onclick="toggleChat()" aria-label="Chat with us">
+  <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+  </svg>
+</button>
+<div class="chatbot-window" id="chatbot-window">
+  <div class="chatbot-header">
+    <div class="chatbot-avatar">🌾</div>
+    <div class="chatbot-info">
+      <div class="chatbot-name">Agrynex Assistant</div>
+      <div class="chatbot-status"><div class="chatbot-status-dot"></div>Online now</div>
+    </div>
+    <button class="chatbot-close" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chatbot-messages" id="chatbot-messages"></div>
+  <div class="chat-quick-replies" id="chat-quick-replies">
+    <button class="chat-quick" onclick="sendQuick('What products do you have?')">🥦 Products</button>
+    <button class="chat-quick" onclick="sendQuick('How does delivery work?')">🚚 Delivery</button>
+    <button class="chat-quick" onclick="sendQuick('Tell me about subscriptions')">📦 Subscribe</button>
+    <button class="chat-quick" onclick="sendQuick('How can I contact you?')">📞 Contact</button>
+  </div>
+  <div class="chatbot-input">
+    <input type="text" id="chat-input" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendChat()" />
+    <button class="chatbot-send" onclick="sendChat()">➤</button>
+  </div>
+</div>
+
+<div class="cart-toast" id="cart-toast">✓ Added to cart</div>
+
+<script>
+  /* ============ DATA ============ */
+  const products = [
+    { id:1,  name:'Kontomire (Cocoyam Leaves)', farmer:'Ama Serwaa in Aburi',    price:8,  unit:'/bunch', emoji:'🥬', cat:'vegetables', img:'https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=400&q=70', badge:'organic', rating:4.8, reviews:24, lowStock:false, origin:'Eastern Region', harvest:'Today', description:'Freshly harvested cocoyam leaves, tender and deeply nutritious. Perfect for kontomire stew, palava sauce, or as a nutritious side dish. Rich in iron and vitamins.', sizes:['1 bunch','2 bunches','3 bunches'] },
+    { id:2,  name:'Roma Tomatoes',               farmer:'Kofi Mensah in Kumasi',  price:12, unit:'/kg',    emoji:'🍅', cat:'vegetables', img:'https://images.unsplash.com/photo-1607305387299-a3d9611cd469?w=400&q=70', badge:'bestseller', rating:4.9, reviews:87, lowStock:false, origin:'Ashanti Region', harvest:'Today', description:'Sun-ripened Roma tomatoes with a rich, concentrated flavour. Perfect for soups, stews, and sauces. Our most popular product — harvested at peak ripeness daily.', sizes:['1 kg','2 kg','5 kg'], bulkPrices:[{qty:'2 kg', price:'GHS 22', save:'GHS 2'},{qty:'5 kg', price:'GHS 52', save:'GHS 8'}] },
+    { id:3,  name:'Plantain',                    farmer:'Kwame Asante in Volta',  price:15, unit:'/bunch', emoji:'🍌', cat:'staples',    img:'https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=400&q=70', badge:'popular', rating:4.7, reviews:43, lowStock:false, origin:'Volta Region', harvest:'Today', description:'Sweet, ripe plantain ready for kelewele, ampesi, or fried plantain. Each bunch contains 8–12 fingers. Sourced from Kwame\'s riverside farm in Volta.', sizes:['1 bunch','2 bunches'] },
+    { id:4,  name:'Garden Eggs',                 farmer:'Yaa Asantewaa in Brong', price:10, unit:'/kg',    emoji:'🍆', cat:'vegetables', img:'https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=400&q=70', badge:null, rating:4.6, reviews:19, lowStock:true, origin:'Brong-Ahafo', harvest:'Yesterday', description:'White and purple garden eggs, fresh from Yaa\'s organic farm. Essential for garden egg stew, palava sauce, and as a healthy snack. Low in calories, high in fibre.', sizes:['500g','1 kg','2 kg'] },
+    { id:5,  name:'Fresh Pawpaw',                farmer:'Kojo Kwarteng in E.R.',  price:18, unit:'/piece', emoji:'🍈', cat:'fruits',     img:'https://images.unsplash.com/photo-1617112848923-cc2234396a8d?w=400&q=70', badge:null, rating:4.7, reviews:31, lowStock:false, origin:'Eastern Region', harvest:'Today', description:'Sweet, fully ripe pawpaw packed with digestive enzymes and vitamin C. Each piece weighs approximately 800g–1.2kg. Perfect for breakfast or as a natural health booster.', sizes:['1 piece','2 pieces','3 pieces'] },
+    { id:6,  name:'Free-range Eggs',             farmer:'Abena Owusu in Techiman',price:20, unit:'/tray',  emoji:'🥚', cat:'farm',       img:'https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=400&q=70', badge:'bestseller', rating:5.0, reviews:112, lowStock:false, origin:'Bono East Region', harvest:'Today', description:'30-count tray of farm-fresh, free-range eggs. Richer orange yolks, deeper flavour — the difference is real. Abena\'s 500 birds are pasture-raised with no hormones or antibiotics.', sizes:['1 tray (30)','2 trays (60)'], bulkPrices:[{qty:'2 trays', price:'GHS 38', save:'GHS 2'}] },
+    { id:7,  name:'Yam',                         farmer:'Kweku Baah in Bono',     price:22, unit:'/kg',    emoji:'🍠', cat:'staples',    img:'https://images.unsplash.com/photo-1630473926567-1a8c27c6b1e3?w=400&q=70', badge:null, rating:4.5, reviews:28, lowStock:false, origin:'Bono Region', harvest:'Yesterday', description:'Fresh, firm yam ideal for ampesi, yam chips, or fried yam. Sourced from the yam belt of Bono Region. Mild, starchy flavour and smooth texture when cooked.', sizes:['1 kg','2 kg','5 kg'] },
+    { id:8,  name:'Pineapple',                   farmer:'Esi Armah in Central',   price:14, unit:'/piece', emoji:'🍍', cat:'fruits',     img:'https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=400&q=70', badge:'popular', rating:4.8, reviews:56, lowStock:false, origin:'Central Region', harvest:'Today', description:'Sweet Ghanaian pineapple at peak ripeness. Central Region is world-renowned for the sweetest pineapples. Perfect for juicing, snacking, or grilling.', sizes:['1 piece','2 pieces','3 pieces'] },
+    { id:9,  name:'Habanero Pepper',             farmer:'Mensa Anim in Accra',    price:6,  unit:'/100g',  emoji:'🌶️', cat:'vegetables', img:'https://images.unsplash.com/photo-1588252303782-cb80119abd6d?w=400&q=70', badge:null, rating:4.6, reviews:15, lowStock:true, origin:'Greater Accra', harvest:'Today', description:'Fresh, fiery habanero peppers — the backbone of Ghanaian cooking. Use fresh for pepper sauces, or blend into your palm nut soup. Warning: extremely hot!', sizes:['100g','250g','500g'] },
+    { id:10, name:'Cassava',                     farmer:'Adjoa Agyekum in Volta', price:10, unit:'/kg',    emoji:'🥔', cat:'staples',    img:'https://images.unsplash.com/photo-1604591218563-c3d2c6b7a1be?w=400&q=70', badge:null, rating:4.4, reviews:22, lowStock:false, origin:'Volta Region', harvest:'Yesterday', description:'Clean, fresh cassava roots for fufu, gari, or boiled cassava. Adjoa\'s cassava is known for its high starch content and consistent quality year-round.', sizes:['1 kg','2 kg','5 kg'] },
+    { id:11, name:'Red Onions',                  farmer:'Kofi Atanga in Northern',price:9,  unit:'/kg',    emoji:'🧅', cat:'vegetables', img:'https://images.unsplash.com/photo-1518977956812-cd3dbadaaf31?w=400&q=70', badge:null, rating:4.7, reviews:39, lowStock:false, origin:'Northern Region', harvest:'Today', description:'Large, pungent red onions from Ghana\'s onion capital. Essential in every Ghanaian kitchen. Our Northern onions are larger and more flavourful than imported varieties.', sizes:['500g','1 kg','2 kg','5 kg'] },
+    { id:12, name:'Raw Honey',                   farmer:'Kwabena Boateng in Brong',price:35,unit:'/jar',   emoji:'🍯', cat:'farm',       img:'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=400&q=70', badge:'organic', rating:4.9, reviews:67, lowStock:false, origin:'Bono Region', harvest:'This week', description:'Pure, unfiltered raw honey from forest beehives in Bono Region. Dark amber colour with complex floral notes. Rich in antioxidants, enzymes, and natural antibacterial properties. Never heated or processed.', sizes:['250ml jar','500ml jar','1 litre jar'] },
+    { id:13, name:'Watermelon',                  farmer:'Akua Donkor in Central', price:25, unit:'/piece', emoji:'🍉', cat:'fruits',     img:'https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?w=400&q=70', badge:null, rating:4.6, reviews:34, lowStock:false, origin:'Central Region', harvest:'Today', description:'Juicy, seedless watermelons from Akua\'s riverside farm. Each piece is hand-selected for sweetness. Average weight 3–5 kg. Perfect for the Accra heat!', sizes:['1 piece (3-5kg)','Half piece'] },
+    { id:14, name:'Fresh Ginger',                farmer:'Yaw Opoku in Eastern',   price:8,  unit:'/100g',  emoji:'🫚', cat:'vegetables', img:'https://images.unsplash.com/photo-1598985237024-4f22e3d1d7ef?w=400&q=70', badge:null, rating:4.5, reviews:18, lowStock:false, origin:'Eastern Region', harvest:'Today', description:'Plump, aromatic fresh ginger root. Perfect for ginger tea, soups, marinades, and traditional remedies. Yaw\'s ginger is known for its exceptional pungency and essential oil content.', sizes:['100g','250g','500g'] },
+    { id:15, name:'Mango',                       farmer:'Afua Amponsah in B-A',   price:20, unit:'/kg',    emoji:'🥭', cat:'fruits',     img:'https://images.unsplash.com/photo-1553279768-865429fa0078?w=400&q=70', badge:'popular', rating:4.8, reviews:49, lowStock:false, origin:'Brong-Ahafo', harvest:'Today', description:'Sweet Keitt and Julie mangoes in season from Brong-Ahafo\'s mango heartland. Hand-picked at peak ripeness. Perfect for eating fresh, blending into juice, or making mango salsa.', sizes:['1 kg (3-4 pieces)','2 kg','5 kg'], bulkPrices:[{qty:'2 kg', price:'GHS 38', save:'GHS 2'},{qty:'5 kg', price:'GHS 88', save:'GHS 12'}] },
+  ];
+
+  const productReviews = {
+    1: [{author:'Akosua M.',verified:true,rating:5,text:'The best kontomire I\'ve had in Accra. Stayed fresh for 3 days in my fridge.',date:'2 days ago'},{author:'Yaw T.',verified:true,rating:5,text:'Tender and fresh. Stew came out perfectly.',date:'1 week ago'}],
+    2: [{author:'Grace A.',verified:true,rating:5,text:'These tomatoes are incredible. So red, so full of flavour. I buy 2kg every week.',date:'Today'},{author:'Emmanuel K.',verified:true,rating:5,text:'Best tomatoes I\'ve found in Accra. My jollof rice has never been better!',date:'3 days ago'},{author:'Abena S.',verified:false,rating:4,text:'Good quality, delivered fresh. Would prefer even riper ones.',date:'1 week ago'}],
+    6: [{author:'Sandra O.',verified:true,rating:5,text:'You can literally see the difference — the yolks are so orange and rich! My kids love them.',date:'Today'},{author:'Michael A.',verified:true,rating:5,text:'Genuinely the best eggs I\'ve ever had. Will not go back to supermarket eggs.',date:'2 days ago'},{author:'Felicity D.',verified:true,rating:5,text:'Ordered twice now. Consistent quality every time. Highly recommended.',date:'5 days ago'}],
+    12: [{author:'Dr. Kojo A.',verified:true,rating:5,text:'Pure and unprocessed. The taste is complex and beautiful. Bought 3 jars.',date:'3 days ago'},{author:'Maame N.',verified:true,rating:5,text:'Using this for my skincare and it\'s amazing. The flavour is unlike anything in shops.',date:'1 week ago'}],
+  };
+
+  const farmerDetails = {
+    ama: { name:'Ama Serwaa', location:'Aburi, Eastern Region', specialty:'Leafy Vegetables', bio:'Ama has been farming in the lush hills of Aburi for 15 years, using natural composting and traditional farming methods passed down from her mother. Her 2.3-acre farm supplies kontomire, garden eggs, and a variety of indigenous greens to Agrynex customers in Accra.', img:'https://images.unsplash.com/photo-1609348445341-4f68ff268de1?w=500&q=70', rating:'4.9 ★', products:'Kontomire, Garden Eggs, Spinach', experience:'15 years', contact:'0244-XXX-XXX', hours:'Mon–Sat, 6am–4pm' },
+    kofi: { name:'Kofi Mensah', location:'Kumasi, Ashanti Region', specialty:'Tomatoes & Peppers', bio:'Three generations of the Mensah family have grown tomatoes in Kumasi. Kofi now runs the 5-acre family farm that his grandfather started in 1960. He is known throughout Ashanti for the quality of his Roma tomatoes, which he grows without synthetic pesticides.', img:'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=500&q=70', rating:'4.8 ★', products:'Roma Tomatoes, Habanero, Bell Peppers', experience:'22 years', contact:'0257-XXX-XXX', hours:'Mon–Sat, 5am–3pm' },
+    abena: { name:'Abena Owusu', location:'Techiman, Bono East Region', specialty:'Free-Range Poultry', bio:'Abena is an award-winning poultry farmer who switched from conventional to free-range farming in 2016. Her 500 birds roam freely on pasture, eating natural grains and insects. She won the MOFA Best Young Farmer Award in 2022. Her eggs consistently receive 5-star ratings from Agrynex customers.', img:'https://images.unsplash.com/photo-1529154036614-a60975f5c760?w=500&q=70', rating:'5.0 ★', products:'Free-Range Eggs, Broiler Chicken', experience:'8 years', contact:'0209-XXX-XXX', hours:'Mon–Fri, 7am–5pm' },
+  };
+
+  let cart = {};
+  let wishlist = new Set();
+  let selectedPayMethod = 'mtn';
+  let selectedModalPay = 'mtn';
+  let selectedBox = 'Standard Family Box';
+  let selectedBoxPrice = 'GHS 120';
+  let selectedFreq = 'Weekly';
+  let selectedWindow = 'Morning 8am–12pm';
+  let currentOrderId = '';
+  let subscriberProfile = null;
+  let chatOpen = false;
+  let currentSortedProducts = [...products];
+
+  /* ---- PRODUCT SIZES ---- */
+  let selectedSizes = {};
+  function selectSize(e, productId, size) {
+    e.stopPropagation();
+    selectedSizes[productId] = size;
+    document.querySelectorAll(`.size-pill[data-pid="${productId}"]`).forEach(p => {
+      p.classList.toggle('active', p.dataset.size === size);
+    });
+  }
+
+  /* ---- RENDER PRODUCTS ---- */
+  function renderProducts(list, gridId) {
+    const g = document.getElementById(gridId);
+    if (!g) return;
+    if (!list.length) { g.innerHTML = '<p style="color:var(--muted);font-size:14px;grid-column:1/-1;padding:1rem 0;">No products found.</p>'; return; }
+    g.innerHTML = list.map(p => {
+      const qty = cart[p.id] || 0;
+      const inWishlist = wishlist.has(p.id);
+      const btn = qty > 0
+        ? `<div class="qty-control">
+             <button class="qty-btn" onclick="changeQty(event,${p.id},-1)">−</button>
+             <span class="qty-num">${qty}</span>
+             <button class="qty-btn" onclick="changeQty(event,${p.id},1)">+</button>
+           </div>`
+        : `<button class="add-btn" onclick="addToCart(event,${p.id})">+ Add</button>`;
+      const badgeHtml = p.badge ? `<div class="product-badge badge-${p.badge}">${p.badge === 'bestseller' ? '🏆 Best Seller' : p.badge === 'popular' ? '🔥 Popular' : p.badge === 'lowstock' ? '⚠ Low Stock' : '🌿 Organic'}</div>` : '';
+      const lowStockBadge = p.lowStock ? `<div class="product-badge badge-lowstock" style="top:${p.badge ? '38px':'10px'}">⚠ Low Stock</div>` : '';
+      const starsHtml = '★'.repeat(Math.floor(p.rating)) + (p.rating % 1 >= 0.5 ? '½' : '');
+      const sizePills = p.sizes ? `<div class="product-size-selector">${p.sizes.slice(0,3).map((s,i) => `<div class="size-pill ${i===0?'active':''}" data-pid="${p.id}" data-size="${s}" onclick="selectSize(event,${p.id},'${s}')">${s}</div>`).join('')}</div>` : '';
+      return `<div class="product-card" onclick="showProductDetail(${p.id})">
+        ${badgeHtml}${lowStockBadge}
+        <button class="wishlist-btn ${inWishlist ? 'active' : ''}" onclick="toggleWishlist(event,${p.id})">${inWishlist ? '❤️' : '🤍'}</button>
+        <div class="product-img"><img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.parentNode.innerHTML='<span style=\\'font-size:48px;\\'>${p.emoji}</span>'" /></div>
+        <div class="product-body">
+          <div class="product-farmer" onclick="event.stopPropagation();showFarmerByProduct(${p.id})">Grown by ${p.farmer}</div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-rating">
+            <span class="product-stars">${'★'.repeat(Math.floor(p.rating))}</span>
+            <span style="font-size:11px;font-weight:700;color:#D97706;">${p.rating}</span>
+            <span class="product-review-count">(${p.reviews} reviews)</span>
+          </div>
+          ${sizePills}
+          <div class="product-footer">
+            <span class="product-price">GHS ${p.price} <span class="product-unit">${p.unit}</span></span>
+            ${btn}
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  /* ---- PRODUCT DETAIL MODAL ---- */
+  function showProductDetail(id) {
+    const p = products.find(x => x.id === id);
+    if (!p) return;
+    const reviews = productReviews[id] || [];
+    const bulkHtml = p.bulkPrices ? `<div class="bulk-discount-table"><div class="bulk-title">📦 Bulk Discounts Available</div>${p.bulkPrices.map(b => `<div class="bulk-row"><span>${b.qty}</span><span>${b.price} <span class="discount-label">(Save ${b.save})</span></span></div>`).join('')}</div>` : '';
+    const reviewsHtml = reviews.length ? reviews.map(r => `<div class="review-item"><div class="review-header"><div class="review-author">${r.author}</div>${r.verified ? '<span class="review-verified">✓ Verified Buyer</span>' : ''}</div><div class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div><div class="review-text">${r.text}</div><div class="review-date">${r.date}</div></div>`).join('') : '<p style="font-size:13px;color:var(--muted);">No reviews yet — be the first to order!</p>';
+    const qty = cart[id] || 0;
+    const addBtnHtml = qty > 0
+      ? `<div class="qty-control" style="justify-content:center;gap:12px;"><button class="qty-btn" style="width:36px;height:36px;" onclick="changeQtyModal(${id},-1)">−</button><span class="qty-num" id="modal-qty">${qty}</span><button class="qty-btn" style="width:36px;height:36px;" onclick="changeQtyModal(${id},1)">+</button></div>`
+      : `<button class="btn-primary" style="width:100%;border-radius:var(--radius-md);padding:13px;" onclick="addToCartModal(${id})">+ Add to Cart</button>`;
+    document.getElementById('pd-modal-title').textContent = p.name;
+    document.getElementById('pd-modal-body').innerHTML = `
+      <img class="pd-modal-img" src="${p.img}" alt="${p.name}" onerror="this.style.display='none'" />
+      <div class="product-rating" style="margin-bottom:12px;"><span class="product-stars" style="font-size:16px;">${'★'.repeat(Math.floor(p.rating))}</span><span style="font-weight:700;color:#D97706;font-size:14px;">${p.rating}</span><span class="product-review-count" style="font-size:13px;">(${p.reviews} reviews)</span></div>
+      <div class="pd-modal-meta">
+        <div class="pd-meta-item"><div class="pd-meta-label">Origin</div><div class="pd-meta-value">${p.origin}</div></div>
+        <div class="pd-meta-item"><div class="pd-meta-label">Harvested</div><div class="pd-meta-value">${p.harvest}</div></div>
+        <div class="pd-meta-item"><div class="pd-meta-label">Price</div><div class="pd-meta-value" style="color:var(--green-mid);">GHS ${p.price} ${p.unit}</div></div>
+        <div class="pd-meta-item"><div class="pd-meta-label">Availability</div><div class="pd-meta-value" style="color:${p.lowStock ? '#EF4444' : 'var(--green-mid)'};">${p.lowStock ? '⚠ Low Stock' : '✓ In Stock'}</div></div>
+      </div>
+      ${bulkHtml}
+      <div class="pd-section-title">About this product</div>
+      <div class="pd-description">${p.description}</div>
+      <div class="pd-farmer-block">
+        <div class="pd-farmer-avatar"><img src="${p.img}" alt="Farmer" onerror="this.outerHTML='<span style=font-size:28px>${p.emoji}</span>'" /></div>
+        <div><div class="pd-farmer-name">${p.farmer}</div><div class="pd-farmer-loc">🌍 ${p.origin}</div></div>
+      </div>
+      ${p.sizes ? `<div style="margin-bottom:1rem;"><div class="pd-section-title">Select size</div><div class="product-size-selector">${p.sizes.map((s,i) => `<div class="size-pill ${i===0?'active':''}" style="padding:6px 16px;font-size:12px;" data-pid="${p.id}" data-size="${s}" onclick="selectSize(event,${p.id},'${s}')">${s}</div>`).join('')}</div></div>` : ''}
+      <div style="margin-bottom:1.5rem;" id="modal-add-section">${addBtnHtml}</div>
+      <div class="reviews-section"><div class="pd-section-title">Customer Reviews (${p.reviews})</div>${reviewsHtml}</div>`;
+    document.getElementById('product-modal-overlay').classList.remove('hidden');
+  }
+
+  function addToCartModal(id) {
+    cart[id] = (cart[id] || 0) + 1;
+    updateCartCount();
+    showToast();
+    const el = document.getElementById('modal-add-section');
+    if (el) el.innerHTML = `<div class="qty-control" style="justify-content:center;gap:12px;"><button class="qty-btn" style="width:36px;height:36px;" onclick="changeQtyModal(${id},-1)">−</button><span class="qty-num" id="modal-qty">${cart[id]}</span><button class="qty-btn" style="width:36px;height:36px;" onclick="changeQtyModal(${id},1)">+</button></div>`;
+    refreshAllGrids();
+  }
+
+  function changeQtyModal(id, delta) {
+    cart[id] = Math.max(0, (cart[id] || 0) + delta);
+    if (cart[id] === 0) delete cart[id];
+    updateCartCount();
+    const el = document.getElementById('modal-qty');
+    if (el) el.textContent = cart[id] || 0;
+    if (!cart[id]) {
+      const addEl = document.getElementById('modal-add-section');
+      if (addEl) addEl.innerHTML = `<button class="btn-primary" style="width:100%;border-radius:var(--radius-md);padding:13px;" onclick="addToCartModal(${id})">+ Add to Cart</button>`;
+    }
+    refreshAllGrids();
+  }
+
+  function closePdModal(e) { if (e.target === document.getElementById('product-modal-overlay')) document.getElementById('product-modal-overlay').classList.add('hidden'); }
+
+  /* ---- FARMER MODAL ---- */
+  function showFarmerModal(key) {
+    const f = farmerDetails[key];
+    if (!f) return;
+    document.getElementById('farmer-modal-title').textContent = f.name;
+    document.getElementById('farmer-modal-body').innerHTML = `
+      <img style="width:100%;height:200px;object-fit:cover;border-radius:var(--radius-lg);margin-bottom:1rem;" src="${f.img}" alt="${f.name}" />
+      <div style="font-family:'Fraunces',serif;font-size:1.2rem;font-weight:700;color:var(--green-dark);margin-bottom:2px;">${f.name}</div>
+      <div style="font-size:12px;color:var(--green-mid);font-weight:600;margin-bottom:1rem;">${f.specialty} · 📍 ${f.location}</div>
+      <p style="font-size:13.5px;color:var(--muted);line-height:1.7;margin-bottom:1.25rem;">${f.bio}</p>
+      <div class="pd-modal-meta">
+        <div class="pd-meta-item"><div class="pd-meta-label">Rating</div><div class="pd-meta-value" style="color:#D97706;">${f.rating}</div></div>
+        <div class="pd-meta-item"><div class="pd-meta-label">Experience</div><div class="pd-meta-value">${f.experience}</div></div>
+        <div class="pd-meta-item" style="grid-column:1/-1;"><div class="pd-meta-label">Products</div><div class="pd-meta-value">${f.products}</div></div>
+      </div>
+      <div style="background:var(--amber-light);border:1px solid var(--amber);border-radius:var(--radius-md);padding:1rem;margin-top:0.5rem;">
+        <div style="font-size:12px;font-weight:700;color:var(--amber-dark);margin-bottom:4px;">📞 Farm Contact</div>
+        <div style="font-size:13px;color:var(--amber-mid);">${f.contact} · ${f.hours}</div>
+      </div>`;
+    document.getElementById('farmer-modal-overlay').classList.remove('hidden');
+  }
+
+  function showFarmerByProduct(productId) {
+    const p = products.find(x => x.id === productId);
+    if (!p) return;
+    const farmerName = p.farmer.toLowerCase();
+    if (farmerName.includes('ama')) showFarmerModal('ama');
+    else if (farmerName.includes('kofi') && farmerName.includes('mensah')) showFarmerModal('kofi');
+    else if (farmerName.includes('abena')) showFarmerModal('abena');
+  }
+
+  function closeFarmerModal(e) { if (e.target === document.getElementById('farmer-modal-overlay')) document.getElementById('farmer-modal-overlay').classList.add('hidden'); }
+
+  /* ---- WISHLIST ---- */
+  function toggleWishlist(e, id) {
+    e.stopPropagation();
+    if (wishlist.has(id)) {
+      wishlist.delete(id);
+      showToastMsg('Removed from wishlist');
+    } else {
+      wishlist.add(id);
+      showToastMsg('❤ Saved to wishlist');
+    }
+    refreshAllGrids();
+    renderWishlist();
+  }
+
+  function renderWishlist() {
+    const grid = document.getElementById('wishlist-grid');
+    const empty = document.getElementById('wishlist-empty');
+    if (!grid) return;
+    const list = products.filter(p => wishlist.has(p.id));
+    if (!list.length) {
+      empty.style.display = 'block';
+      grid.style.display = 'none';
+    } else {
+      empty.style.display = 'none';
+      grid.style.display = 'grid';
+      renderProducts(list, 'wishlist-grid');
+    }
+  }
+
+  /* ---- SORT ---- */
+  function sortProducts(mode) {
+    let list = [...products];
+    if (mode === 'price-asc') list.sort((a,b) => a.price - b.price);
+    else if (mode === 'price-desc') list.sort((a,b) => b.price - a.price);
+    else if (mode === 'rating') list.sort((a,b) => b.rating - a.rating);
+    else if (mode === 'name') list.sort((a,b) => a.name.localeCompare(b.name));
+    currentSortedProducts = list;
+    renderProducts(list, 'shop-grid');
+  }
+
+  /* ---- CART ---- */
+  function renderCart() {
+    const items = Object.entries(cart).filter(([,q]) => q > 0);
+    const cartEmpty = document.getElementById('cart-empty');
+    const cartFull  = document.getElementById('cart-full');
+    if (!items.length) { cartEmpty.style.display='block'; cartFull.style.display='none'; return; }
+    cartEmpty.style.display='none'; cartFull.style.display='block';
+    const list = document.getElementById('cart-items-list');
+    list.innerHTML = items.map(([id, qty]) => {
+      const p = products.find(x => x.id == id);
+      return `<div class="cart-item">
+        <div class="cart-item-emoji"><img src="${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" onerror="this.outerHTML='${p.emoji}'" /></div>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${p.name}</div>
+          <div class="cart-item-farmer">Grown by ${p.farmer}</div>
+          <div class="cart-item-price">GHS ${p.price} ${p.unit}</div>
+        </div>
+        <div class="qty-control">
+          <button class="qty-btn" onclick="changeQty(null,${p.id},-1);renderCart();updateCheckout();">−</button>
+          <span class="qty-num">${qty}</span>
+          <button class="qty-btn" onclick="changeQty(null,${p.id},1);renderCart();updateCheckout();">+</button>
+        </div>
+        <button class="remove-btn" onclick="removeItem(${p.id})">✕</button>
+      </div>`;
+    }).join('');
+    const sub = getSubtotal();
+    document.getElementById('summary-subtotal').textContent = 'GHS ' + sub;
+    document.getElementById('summary-total').textContent = 'GHS ' + sub;
+  }
+
+  function renderCheckoutPreview() {
+    const items = Object.entries(cart).filter(([,q]) => q > 0);
+    const el = document.getElementById('checkout-items-preview');
+    if (!el) return;
+    el.innerHTML = items.map(([id, qty]) => {
+      const p = products.find(x => x.id == id);
+      return `<div style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px solid var(--border);">
+        <span>${p.emoji} ${p.name} × ${qty}</span>
+        <span style="font-weight:600;">GHS ${p.price * qty}</span>
+      </div>`;
+    }).join('');
+    updateCheckout();
+  }
+
+  function getSubtotal() {
+    return Object.entries(cart).reduce((sum, [id, qty]) => {
+      const p = products.find(x => x.id == id);
+      return sum + (p ? p.price * qty : 0);
+    }, 0);
+  }
+
+  function updateCheckout() {
+    const sub = getSubtotal();
+    const isMomo = ['mtn','telecel','airteltigo'].includes(selectedPayMethod);
+    const discount = isMomo ? Math.round(sub * 0.02) : 0;
+    const total = sub - discount;
+    document.getElementById('co-subtotal').textContent = 'GHS ' + sub;
+    document.getElementById('co-total').textContent = 'GHS ' + total;
+    const discountRow = document.getElementById('discount-row');
+    if (isMomo && discount > 0) {
+      discountRow.style.display = 'flex';
+      document.getElementById('co-discount').textContent = '-GHS ' + discount;
+    } else {
+      discountRow.style.display = 'none';
+    }
+  }
+
+  function addToCart(e, id) {
+    if (e) e.stopPropagation();
+    cart[id] = (cart[id] || 0) + 1;
+    updateCartCount();
+    showToast();
+    refreshAllGrids();
+    const btn = document.getElementById('cart-btn');
+    if (btn) { btn.classList.add('bump'); setTimeout(() => btn.classList.remove('bump'), 400); }
+    updateFloatingCart();
+  }
+
+  function changeQty(e, id, delta) {
+    if (e) e.stopPropagation();
+    cart[id] = Math.max(0, (cart[id] || 0) + delta);
+    if (cart[id] === 0) delete cart[id];
+    updateCartCount();
+    refreshAllGrids();
+    updateFloatingCart();
+  }
+
+  function removeItem(id) {
+    delete cart[id];
+    updateCartCount();
+    renderCart();
+    updateCheckout();
+    refreshAllGrids();
+    updateFloatingCart();
+  }
+
+  function refreshAllGrids() {
+    renderProducts(products.slice(0,6), 'home-grid');
+    renderProducts(currentSortedProducts, 'shop-grid');
+    renderWishlist();
+  }
+
+  function updateCartCount() {
+    const total = Object.values(cart).reduce((a,b) => a+b, 0);
+    document.getElementById('cart-count').textContent = total;
+  }
+
+  function updateFloatingCart() {
+    const total = Object.values(cart).reduce((a,b) => a+b, 0);
+    const fc = document.getElementById('floating-cart');
+    const lbl = document.getElementById('floating-cart-label');
+    if (!fc) return;
+    if (total > 0) {
+      fc.classList.add('visible');
+      const sub = getSubtotal();
+      lbl.textContent = `${total} item${total > 1 ? 's' : ''} · GHS ${sub}`;
+    } else {
+      fc.classList.remove('visible');
+    }
+  }
+
+  function showToast() { showToastMsg('✓ Added to cart'); }
+  function showToastMsg(msg) {
+    const t = document.getElementById('cart-toast');
+    t.textContent = msg;
+    t.style.display = 'block';
+    setTimeout(() => { t.style.display = 'none'; }, 2200);
+  }
+
+  /* ---- FILTERING ---- */
+  function filterCat(cat) {
+    switchTab('shop');
+    setTimeout(() => {
+      const list = products.filter(p => p.cat === cat);
+      renderProducts(list, 'shop-grid');
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    }, 50);
+  }
+
+  function filterCatTab(btn, cat) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    const list = cat === 'all' ? [...products] : products.filter(p => p.cat === cat);
+    currentSortedProducts = list;
+    renderProducts(list, 'shop-grid');
+  }
+
+  function filterHomeProducts() {
+    const q = document.getElementById('search-input').value.toLowerCase();
+    if (!q) { renderProducts(products.slice(0,6), 'home-grid'); return; }
+    const list = products.filter(p => p.name.toLowerCase().includes(q) || p.cat.includes(q));
+    renderProducts(list.slice(0,6), 'home-grid');
+  }
+
+  /* ---- NAVIGATION ---- */
+  function switchTab(name) {
+    document.querySelectorAll('[id^="tab-"]').forEach(el => el.style.display = 'none');
+    const el = document.getElementById('tab-' + name);
+    if (el) { el.style.display = 'block'; window.scrollTo({top: 0, behavior: 'smooth'}); }
+    if (name === 'cart') { renderCart(); }
+    if (name === 'checkout') { renderCheckoutPreview(); updateCheckout(); }
+    if (name === 'shop') { renderProducts(currentSortedProducts, 'shop-grid'); }
+    if (name === 'wishlist') { renderWishlist(); }
+  }
+
+  function showProfileOrLogin() { switchTab('profile'); }
+
+  /* ---- CHECKOUT ---- */
+  function selectSlot(el) { document.querySelectorAll('.slot-option').forEach(s => s.classList.remove('active')); el.classList.add('active'); }
+  function selectPayMethod(el, method) {
+    selectedPayMethod = method;
+    document.querySelectorAll('#pay-options .pay-option').forEach(o => o.classList.remove('active'));
+    el.classList.add('active');
+    updateCheckout();
+  }
+
+  function submitOrder() {
+    const name = document.getElementById('co-name').value.trim();
+    const phone = document.getElementById('co-phone').value.trim();
+    const address = document.getElementById('co-address').value.trim();
+    if (!name || !phone || !address) { alert('Please fill in your delivery details.'); return; }
+    currentOrderId = '#AG-' + (Math.floor(Math.random() * 9000) + 1000);
+    const isMomo = ['mtn','telecel','airteltigo'].includes(selectedPayMethod);
+    if (isMomo) {
+      document.getElementById('momo-amount').textContent = 'Pay GHS ' + getSubtotal();
+      switchTab('momo');
+    } else {
+      showLoadingAndComplete();
+    }
+  }
+
+  function showLoadingAndComplete() {
+    document.getElementById('loading-overlay').classList.add('active');
+    setTimeout(() => {
+      document.getElementById('loading-overlay').classList.remove('active');
+      const sub = getSubtotal();
+      const isMomo = ['mtn','telecel','airteltigo'].includes(selectedPayMethod);
+      const discount = isMomo ? Math.round(sub * 0.02) : 0;
+      const slot = document.querySelector('.slot-option.active .slot-time')?.textContent || 'Morning';
+      const city = document.getElementById('co-city')?.value || 'Accra';
+      const area = document.getElementById('co-area')?.value || '';
+      document.getElementById('success-order-id').textContent = currentOrderId;
+      document.getElementById('success-amount').textContent = 'GHS ' + (sub - discount);
+      document.getElementById('success-method').textContent = selectedPayMethod === 'mtn' ? 'MTN MoMo' : selectedPayMethod === 'telecel' ? 'Telecel Cash' : selectedPayMethod === 'card' ? 'Card' : 'Cash on Delivery';
+      document.getElementById('success-delivery').textContent = slot + ' slot, Today';
+      document.getElementById('success-address').textContent = (area ? area + ', ' : '') + city;
+      cart = {};
+      updateCartCount();
+      refreshAllGrids();
+      updateFloatingCart();
+      switchTab('success');
+    }, 2500);
+  }
+
+  function confirmMomoPayment() { showLoadingAndComplete(); }
+
+  /* ---- SUBSCRIBE ---- */
+  function selectBox(el, name, price) {
+    document.querySelectorAll('.box-option').forEach(o => o.classList.remove('active'));
+    el.classList.add('active');
+    selectedBox = name; selectedBoxPrice = price;
+    updateSubSummary();
+  }
+  function selectFreq(el, freq) {
+    document.querySelectorAll('#freq-pills .freq-pill').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    selectedFreq = freq;
+    updateSubSummary();
+  }
+  function selectWindow(el) {
+    document.querySelectorAll('#window-pills .freq-pill').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    selectedWindow = el.textContent;
+  }
+  function selectPay(el) {
+    document.querySelectorAll('#pay-methods .pay-pill').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+  }
+  function updateSubSummary() {
+    const nameEl = document.getElementById('sub-name');
+    const priceEl = document.getElementById('sub-price');
+    if (nameEl) nameEl.textContent = selectedBox + ' — ' + selectedFreq;
+    if (priceEl) priceEl.textContent = selectedBoxPrice + ' / delivery';
+  }
+  function openSubscribeModal() {
+    document.getElementById('sub-modal-overlay').classList.remove('hidden');
+    modalNext(1);
+  }
+  function closeSubModal(e) { if (e.target === document.getElementById('sub-modal-overlay')) closeModalFull(); }
+  function closeModalFull() { document.getElementById('sub-modal-overlay').classList.add('hidden'); }
+  function modalNext(step) {
+    [1,2,3].forEach(i => { document.getElementById('modal-step-'+i).classList.remove('active'); document.getElementById('mpd'+i).classList.remove('done'); });
+    document.getElementById('modal-step-'+step).classList.add('active');
+    for (let i=1; i<=step; i++) document.getElementById('mpd'+i).classList.add('done');
+    if (step === 2) {
+      const name = document.getElementById('sub-fname')?.value || 'Your Name';
+      document.getElementById('mc-name').textContent = name;
+      document.getElementById('mc-box').textContent = selectedBox;
+      document.getElementById('mc-freq').textContent = selectedFreq;
+      document.getElementById('mc-window').textContent = selectedWindow;
+      document.getElementById('mc-price').textContent = selectedBoxPrice;
+      document.getElementById('mc-total').textContent = selectedBox + ' — ' + selectedBoxPrice;
+    }
+    if (step === 3) {
+      const name = document.getElementById('sub-fname')?.value || 'Subscriber';
+      const phone = document.getElementById('sub-phone')?.value;
+      const email = document.getElementById('sub-email')?.value;
+      const city = document.getElementById('sub-city')?.value;
+      const address = document.getElementById('sub-address')?.value;
+      subscriberProfile = { name, phone, email, city, address, box: selectedBox, freq: selectedFreq, window: selectedWindow, price: selectedBoxPrice, payment: 'MTN MoMo', deliveries: 0, saved: 0, nextDelivery: 'Saturday, 12 Apr' };
+    }
+  }
+
+  /* ---- PROFILE ---- */
+  function loginSubscriber() {
+    const email = document.getElementById('login-email').value;
+    const pass = document.getElementById('login-password').value;
+    if (!email || !pass) { alert('Please enter your email and password.'); return; }
+    const p = subscriberProfile || { name: 'Ama Mensah', phone: '0244 XXX XXX', email: email, city: 'Accra', address: '14 Independence Ave', box: 'Standard Family Box', freq: 'Weekly', window: 'Morning 8am–12pm', price: 'GHS 120', payment: 'MTN MoMo', deliveries: 3, saved: 24, nextDelivery: 'Saturday, 12 Apr' };
+    document.getElementById('login-section').style.display = 'none';
+    document.getElementById('profile-section').style.display = 'block';
+    document.getElementById('profile-name').textContent = p.name;
+    document.getElementById('profile-deliveries').textContent = p.deliveries;
+    document.getElementById('profile-saved').textContent = 'GHS ' + p.saved;
+    document.getElementById('profile-box').textContent = p.box;
+    document.getElementById('profile-freq').textContent = p.freq;
+    document.getElementById('profile-window').textContent = p.window;
+    document.getElementById('profile-price').textContent = p.price + ' / delivery';
+    document.getElementById('profile-payment').textContent = p.payment;
+    document.getElementById('profile-next-delivery').textContent = p.nextDelivery;
+    document.getElementById('pd-name').textContent = p.name;
+    document.getElementById('pd-phone').textContent = p.phone;
+    document.getElementById('pd-email').textContent = p.email;
+    document.getElementById('pd-city').textContent = p.city;
+    document.getElementById('pd-address').textContent = (p.address || '') + ', ' + p.city;
+    const hist = document.getElementById('profile-delivery-history');
+    const entries = [
+      { date: p.nextDelivery, desc: p.box + ' — scheduled', upcoming: true },
+      { date: 'Today, 10 Apr', desc: 'Subscription renewed', upcoming: false },
+      { date: 'Sat, 3 Apr', desc: p.box + ' — delivered', upcoming: false },
+    ];
+    hist.innerHTML = entries.map((e,i) => `
+      <div class="delivery-item">
+        <div class="delivery-dot-wrap">
+          <div class="delivery-dot${e.upcoming ? '' : ' past'}"></div>
+          ${i < entries.length-1 ? '<div class="delivery-line"></div>' : ''}
+        </div>
+        <div class="delivery-info">
+          <div class="delivery-date">${e.date}</div>
+          <div class="delivery-desc">${e.desc}</div>
+        </div>
+      </div>`).join('');
+  }
+
+  function logoutSubscriber() {
+    document.getElementById('login-section').style.display = 'block';
+    document.getElementById('profile-section').style.display = 'none';
+    document.getElementById('login-email').value = '';
+    document.getElementById('login-password').value = '';
+  }
+
+  /* ---- POLICY ---- */
+  const policyContent = {
+    about: `<h2>About Agrynex</h2><p>Agrynex is Ghana's premier farm-to-table platform, connecting urban consumers directly with verified local farmers across the country. Founded in 2024 and based in Accra, we are on a mission to make fresh, nutritious food accessible and affordable for every Ghanaian family.</p><h3>Our Mission</h3><p>To eliminate the middleman and create a fair, transparent food supply chain that benefits farmers and consumers equally. We believe great food starts with great farmers — and great farmers deserve fair prices.</p><h3>Our Network</h3><p>We work with over 120 verified farmers across 7 regions of Ghana, covering vegetables, fruits, staples, and farm produce. Every farmer on our platform is personally visited and approved by our team.</p><h3>Contact</h3><p>📞 0533686580 · 📧 hello@agrynex.com · 📍 Accra, Ghana</p>`,
+    delivery: `<h2>Delivery Policy</h2><h3>Coverage Areas</h3><p>We deliver to all areas within Accra, Tema, Kumasi, and Takoradi. Delivery is always <strong>free</strong>.</p><h3>Delivery Slots</h3><p>Morning: 8:00 AM – 12:00 PM<br>Evening: 4:00 PM – 8:00 PM</p><h3>Order Cutoff Times</h3><p>Morning slot: Order before 6:00 AM<br>Evening slot: Order before 12:00 PM</p><h3>Same-Day Delivery</h3><p>We guarantee same-day delivery for orders placed within the cutoff times. Orders placed after cutoff will be delivered in the next available slot.</p>`,
+    refund: `<h2>Refund & Returns Policy</h2><h3>100% Freshness Guarantee</h3><p>We stand behind the quality of every product we deliver. If you receive produce that is damaged, spoiled, or not to your satisfaction, we will replace it or issue a full refund.</p><h3>How to Request a Refund</h3><p>Contact us within 24 hours of delivery via WhatsApp (0533686580) or email (hello@agrynex.com) with your order number and a photo of the affected product.</p><h3>Refund Timeline</h3><p>Mobile Money refunds: 1–3 business days<br>Card refunds: 3–7 business days<br>Replacements: Next available delivery slot</p>`,
+    terms: `<h2>Terms & Conditions</h2><h3>Use of Platform</h3><p>By using Agrynex, you agree to provide accurate information and not to misuse our platform. Orders must be placed in good faith for personal or business consumption.</p><h3>Orders & Payments</h3><p>All prices are in Ghana Cedis (GHS). Orders are confirmed only after payment is received. We reserve the right to cancel orders in cases of stock unavailability.</p><h3>Delivery</h3><p>We strive to deliver within the stated slots but cannot guarantee exact delivery times due to traffic and logistics conditions. You will receive WhatsApp updates on your delivery status.</p>`,
+    privacy: `<h2>Privacy Policy</h2><h3>Data We Collect</h3><p>We collect your name, phone number, email address, and delivery address to process and fulfil your orders. We do not sell your personal information to third parties.</p><h3>How We Use Your Data</h3><p>Your data is used only to process orders, send delivery updates, and improve our service. We may send you promotional messages via WhatsApp or SMS — you can opt out at any time.</p><h3>Data Security</h3><p>We use industry-standard encryption and security measures to protect your personal information. Payment data is processed by Korapay and is never stored on our servers.</p>`,
+  };
+
+  function showPolicy(key) {
+    document.getElementById('policy-content').innerHTML = policyContent[key] || '<h2>Content not found</h2>';
+    switchTab('policy');
+  }
+
+  /* ---- TRACKING ---- */
+  function rate(n) { document.getElementById('rating-thanks').style.display = 'block'; }
+
+  /* ---- FAQ ---- */
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  /* ---- NEWSLETTER ---- */
+  function subscribeNewsletter() {
+    const email = document.getElementById('newsletter-email').value;
+    if (!email) return;
+    showToastMsg('🌾 You\'re subscribed! Welcome to the Agrynex family.');
+    document.getElementById('newsletter-email').value = '';
+  }
+
+  /* ---- CHATBOT ---- */
+  const botResponses = {
+    default: [
+      "Thanks for your question! Our team is happy to help. You can also call us on 0533686580.",
+      "Great question! Feel free to browse our fresh products or subscribe to a farm box.",
+      "I'm here to help! For urgent matters, call 0533686580 or WhatsApp us."
+    ],
+    products: "We carry a wide range of fresh products including tomatoes, plantain, kontomire, garden eggs, pawpaw, pineapple, mango, watermelon, yam, cassava, and farm products like free-range eggs and raw honey — all sourced directly from verified Ghanaian farmers!",
+    delivery: "We offer free same-day delivery in Accra! Choose a Morning slot (8am–12pm) or Evening slot (4pm–8pm). We also deliver to Tema, Kumasi, and Takoradi.",
+    subscription: "Our subscription boxes include: Standard Family Box (GHS 120/week for 4), Healthy Office Box (GHS 200/week), Soup Starter Pack (GHS 60/week), and Organic Premium Box (GHS 250/week). You can choose weekly, bi-weekly, or monthly delivery!",
+    contact: "You can reach us at:\n📞 0533686580\n💬 WhatsApp: 0533686580\n📧 hello@agrynex.com\nWe're based in Accra, Ghana 🇬🇭",
+    payment: "We accept MTN MoMo, Telecel Cash, AirtelTigo Money, Debit/Credit Cards, and Pay on Delivery. Mobile Money payments get a 2% discount!",
+    price: "Our products start from GHS 6 and go up to GHS 35. Subscription boxes range from GHS 60 to GHS 250 per delivery. Delivery is always FREE!",
+  };
+
+  function toggleChat() {
+    chatOpen = !chatOpen;
+    document.getElementById('chatbot-window').classList.toggle('open', chatOpen);
+    if (chatOpen && document.getElementById('chatbot-messages').children.length === 0) {
+      addBotMsg("👋 Hi! I'm your Agrynex assistant. Smart Farming, Fresh Living — that's our promise!\n\nHow can I help you today?");
+    }
+  }
+
+  function addBotMsg(text) {
+    const msgs = document.getElementById('chatbot-messages');
+    const div = document.createElement('div');
+    div.className = 'chat-msg bot';
+    div.innerHTML = `<div class="chat-bubble">${text.replace(/\n/g,'<br>')}</div><div class="chat-time">Just now</div>`;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function addUserMsg(text) {
+    const msgs = document.getElementById('chatbot-messages');
+    const div = document.createElement('div');
+    div.className = 'chat-msg user';
+    div.innerHTML = `<div class="chat-bubble">${text}</div><div class="chat-time">You</div>`;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function showTyping() {
+    const msgs = document.getElementById('chatbot-messages');
+    const div = document.createElement('div');
+    div.className = 'chat-msg bot';
+    div.id = 'typing-indicator';
+    div.innerHTML = `<div class="chat-bubble typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+    return div;
+  }
+
+  function sendChat() {
+    const input = document.getElementById('chat-input');
+    const text = input.value.trim();
+    if (!text) return;
+    addUserMsg(text);
+    input.value = '';
+    document.getElementById('chat-quick-replies').style.display = 'none';
+    const typing = showTyping();
+    setTimeout(() => {
+      typing.remove();
+      const lower = text.toLowerCase();
+      let response;
+      if (lower.includes('product') || lower.includes('vegetable') || lower.includes('fruit') || lower.includes('sell') || lower.includes('have')) response = botResponses.products;
+      else if (lower.includes('deliver') || lower.includes('ship') || lower.includes('when')) response = botResponses.delivery;
+      else if (lower.includes('subscri') || lower.includes('box') || lower.includes('weekly')) response = botResponses.subscription;
+      else if (lower.includes('contact') || lower.includes('phone') || lower.includes('call') || lower.includes('number') || lower.includes('reach') || lower.includes('whatsapp')) response = botResponses.contact;
+      else if (lower.includes('pay') || lower.includes('momo') || lower.includes('mtn') || lower.includes('card')) response = botResponses.payment;
+      else if (lower.includes('price') || lower.includes('cost') || lower.includes('how much') || lower.includes('ghs')) response = botResponses.price;
+      else response = botResponses.default[Math.floor(Math.random() * botResponses.default.length)];
+      addBotMsg(response);
+    }, 900 + Math.random() * 500);
+  }
+
+  function sendQuick(text) {
+    document.getElementById('chat-input').value = text;
+    sendChat();
+  }
+
+  /* ---- COUNTDOWN ---- */
+  let totalMins = 222;
+  setInterval(() => {
+    if (totalMins > 0) totalMins--;
+    const el = document.getElementById('countdown');
+    if (el) {
+      const h = Math.floor(totalMins / 60);
+      const m = totalMins % 60;
+      el.textContent = h + 'h ' + String(m).padStart(2,'0') + 'm';
+    }
+  }, 60000);
+
+  /* ---- STICKY NAV ---- */
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('main-nav');
+    if (nav) nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  /* ---- INIT ---- */
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      renderProducts(products.slice(0,6), 'home-grid');
+      renderProducts(products, 'shop-grid');
+    }, 600); // slight delay to show skeleton
+  });
+</script>
+</body>
+</html>
